@@ -26,7 +26,7 @@ O projeto está a ser desenvolvido por uma equipa de seis elementos, com respons
 
 ### Desenvolvimento FrontEnd
 
-- **Khrissy Marcelo**
-  - Responsável pelo design da interface do utilizador (UI) e pela experiência do utilizador (UX), implementando os componentes visuais e a navegação entre páginas.
 - **Benjamin Mangave**
+  - Responsável pelo design da interface do utilizador (UI) e pela experiência do utilizador (UX), implementando os componentes visuais e a navegação entre páginas.
+- **Khrissy Marcelo**
   - Responsável pela integração das interfaces com os serviços do backend, garantindo a funcionalidade dinâmica da aplicação, como formulários de agendamento e painéis de controlo.
