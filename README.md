@@ -20,9 +20,9 @@ O projeto está a ser desenvolvido por uma equipa de seis elementos, com respons
 ### Desenvolvimento BackEnd
 
 - **Xheymon Bucuane**
-  - Responsável pela arquitetura do servidor, criação de APIs, e implementação da lógica de negócio e regras de agendamento.
+  - Responsável pela arquitetura do servidor, e implementação da lógica de negócio e regras de agendamento.
 - **Martin Langa**
-  - Responsável pela modelação da base de dados, gestão de utilizadores, autenticação e integração dos módulos de backend com o frontend.
+  - Responsável pela modelação da base de dados, gestão de utilizadores, criação de APIs, autenticação e integração dos módulos de backend com o frontend.
 
 ### Desenvolvimento FrontEnd
 
