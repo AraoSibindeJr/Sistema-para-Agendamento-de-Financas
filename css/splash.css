@@ -1,15 +1,8 @@
-/* ============================================================
-   splash.css — Estilos exclusivos da Splash Screen (index.html)
-   ============================================================ */
-
-/* ---- Fundo geral da página ---- */
 body {
   background-color: var(--cinza-fundo);
 }
 
-/* ============================================================
-   HERO SECTION — Secção principal da splash
-   ============================================================ */
+/* HERO */
 .splash-main {
   max-width: 1200px;
   margin: 0 auto;
@@ -25,12 +18,12 @@ body {
   padding: 56px 0 40px;
 }
 
-/* Conteúdo textual do hero */
+/* texto do hero */
 .hero-content {
   max-width: 520px;
 }
 
-/* Badge de identificação institucional */
+/* Badge de identificacao institucional */
 .hero-badge {
   display: inline-block;
   background-color: var(--azul-claro);
@@ -74,7 +67,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* ---- Visual / Imagem do hero ---- */
+/* Imagem do hero*/
 .hero-visual {
   display: flex;
   justify-content: center;
@@ -100,7 +93,7 @@ body {
   align-items: center;
 }
 
-/* Badges flutuantes de estatísticas */
+/* Badges flutuantes de estatisticas */
 .stat-badge {
   position: absolute;
   background: var(--branco);
@@ -130,9 +123,7 @@ body {
   letter-spacing: 0.06em;
 }
 
-/* ============================================================
-   INFO SECTION — Cards informativos abaixo do hero
-   ============================================================ */
+/*INFO SECTION */
 .info-section {
   padding: 48px 0 24px;
   border-top: 1px solid var(--azul-borda);
@@ -183,9 +174,7 @@ body {
   line-height: 1.6;
 }
 
-/* ============================================================
-   NOTICE SECTION — Aviso institucional
-   ============================================================ */
+/*NOTICE SECTION (avisos)*/
 .notice-section {
   padding: 24px 0;
 }
@@ -209,9 +198,7 @@ body {
   line-height: 1.5;
 }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/*FOOTER*/
 .footer {
   background-color: var(--azul-escuro);
   color: rgba(255,255,255,0.7);
@@ -268,21 +255,32 @@ body {
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ============================================================
-   RESPONSIVO
-   ============================================================ */
+/*RESPONSIVIDAD*/
 @media (max-width: 900px) {
   .hero-section {
     grid-template-columns: 1fr;
     padding: 40px 0 32px;
   }
-  .hero-visual { display: none; } /* oculta em tablet pequeno */
-  .hero-title  { font-size: 2rem; }
-  .info-grid   { grid-template-columns: 1fr; }
+  .hero-visual {
+     display: none; 
+    } 
+  .hero-title  { 
+    font-size: 2rem; 
+  }
+  .info-grid   { 
+    grid-template-columns: 1fr; 
+  }
 }
 
 @media (max-width: 600px) {
-  .hero-title   { font-size: 1.7rem; }
-  .hero-actions { flex-direction: column; }
-  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-title   { 
+    font-size: 1.7rem; 
+  }
+  .hero-actions { 
+    flex-direction: column; 
+  }
+  .hero-actions .btn { 
+    width: 100%; 
+    justify-content: center; 
+  }
 }
