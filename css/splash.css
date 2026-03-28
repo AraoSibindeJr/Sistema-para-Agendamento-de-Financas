@@ -1,0 +1,288 @@
+/* ============================================================
+   splash.css — Estilos exclusivos da Splash Screen (index.html)
+   ============================================================ */
+
+/* ---- Fundo geral da página ---- */
+body {
+  background-color: var(--cinza-fundo);
+}
+
+/* ============================================================
+   HERO SECTION — Secção principal da splash
+   ============================================================ */
+.splash-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  min-height: 480px;
+  padding: 56px 0 40px;
+}
+
+/* Conteúdo textual do hero */
+.hero-content {
+  max-width: 520px;
+}
+
+/* Badge de identificação institucional */
+.hero-badge {
+  display: inline-block;
+  background-color: var(--azul-claro);
+  color: var(--azul-escuro);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--azul-borda);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--azul-escuro);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--azul-medio);
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
+.hero-description {
+  font-size: 0.95rem;
+  color: var(--cinza-texto);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---- Visual / Imagem do hero ---- */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image-card {
+  position: relative;
+  background: var(--branco);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--sombra-card);
+  border: 1px solid var(--azul-borda);
+  width: 100%;
+  max-width: 380px;
+}
+
+.hero-image-placeholder {
+  background: var(--azul-claro);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Badges flutuantes de estatísticas */
+.stat-badge {
+  position: absolute;
+  background: var(--branco);
+  border: 1px solid var(--azul-borda);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  box-shadow: var(--sombra-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.stat-badge--top  { top: -12px; right: 24px; }
+.stat-badge--bottom { bottom: -12px; left: 24px; }
+
+.stat-number {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--azul-escuro);
+}
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--cinza-label);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   INFO SECTION — Cards informativos abaixo do hero
+   ============================================================ */
+.info-section {
+  padding: 48px 0 24px;
+  border-top: 1px solid var(--azul-borda);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.info-card {
+  background: var(--branco);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  border: 1px solid var(--azul-borda);
+  box-shadow: var(--sombra-card);
+  transition: box-shadow var(--transicao), transform var(--transicao);
+}
+
+.info-card:hover {
+  box-shadow: var(--sombra-hover);
+  transform: translateY(-2px);
+}
+
+.info-card-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--azul-claro);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--azul-escuro);
+  margin-bottom: 16px;
+}
+
+.info-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--preto-titulo);
+}
+
+.info-card p {
+  font-size: 0.875rem;
+  color: var(--cinza-texto);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   NOTICE SECTION — Aviso institucional
+   ============================================================ */
+.notice-section {
+  padding: 24px 0;
+}
+
+.notice-box {
+  background: var(--amarelo-bg);
+  border: 1px solid #F6D860;
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--amarelo);
+}
+
+.notice-box svg { flex-shrink: 0; margin-top: 2px; }
+
+.notice-box p {
+  font-size: 0.85rem;
+  color: #7B5800;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background-color: var(--azul-escuro);
+  color: rgba(255,255,255,0.7);
+  padding: 32px 0 24px;
+  margin-top: 48px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-emblem { color: #A8C8F0; }
+
+.footer-brand-name {
+  font-family: var(--fonte-titulo);
+  font-size: 0.95rem;
+  color: var(--branco);
+  font-weight: 600;
+}
+
+.footer-brand-sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.82rem;
+  transition: color var(--transicao);
+}
+.footer-links a:hover { color: var(--branco); }
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width: 900px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    padding: 40px 0 32px;
+  }
+  .hero-visual { display: none; } /* oculta em tablet pequeno */
+  .hero-title  { font-size: 2rem; }
+  .info-grid   { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .hero-title   { font-size: 1.7rem; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+}
