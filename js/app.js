@@ -1,23 +1,18 @@
-/**
- * app.js — JavaScript da Splash Screen (index.html)
- * Funcionalidades: animações de entrada, redirecionamento
- */
-
 // Aguarda o DOM carregar completamente
 document.addEventListener('DOMContentLoaded', function () {
 
-  // === Animação de entrada dos cards da secção info ===
-  // Usamos IntersectionObserver para animar quando os elementos ficam visíveis
+  // Animacao de entrada dos cards da seccao info
+  // Usamos IntersectionObserver para animar quando os elementos ficam visiveis
   const fadeElements = document.querySelectorAll('.info-card');
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          // Adiciona a animação quando o elemento entra no ecrã
+          // Adiciona a animacao quando o elemento entra no ecrã
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target); // Para de observar após animar
+          observer.unobserve(entry.target); // Para de observar apos animar
         }
       });
     }, { threshold: 0.1 });

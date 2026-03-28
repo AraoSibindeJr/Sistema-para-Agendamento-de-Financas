@@ -11,19 +11,19 @@
 
 // Ícones SVG para cada tipo de popup
 const POPUP_ICONS = {
-  success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <path d="M20 6L9 17l-5-5"/>
-            </svg>`,
-  error:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="15" y1="9" x2="9" y2="15"/>
-              <line x1="9" y1="9" x2="15" y2="15"/>
-            </svg>`,
-  warning: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-              <line x1="12" y1="9" x2="12" y2="13"/>
-              <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>`
+  // success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+  //             <path d="M20 6L9 17l-5-5"/>
+  //           </svg>`,
+  // error:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+  //             <circle cx="12" cy="12" r="10"/>
+  //             <line x1="15" y1="9" x2="9" y2="15"/>
+  //             <line x1="9" y1="9" x2="15" y2="15"/>
+  //           </svg>`,
+  // warning: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+  //             <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+  //             <line x1="12" y1="9" x2="12" y2="13"/>
+  //             <line x1="12" y1="17" x2="12.01" y2="17"/>
+  //           </svg>`
 };
 
 /**
@@ -31,8 +31,8 @@ const POPUP_ICONS = {
  * @param {string} tipo - 'success', 'error' ou 'warning'
  * @param {string} titulo - Título do popup
  * @param {string} mensagem - Mensagem descritiva
- * @param {Function} [callbackAoFechar] - Função chamada ao fechar (opcional)
- * @param {number} [autoFecharMs] - Fecha automaticamente após X milissegundos (opcional)
+ * @param {Function} [callbackAoFechar] - Funcao chamada ao fechar (opcional)
+ * @param {number} [autoFecharMs] - Fecha automaticamente apos X milissegundos (opcional)
  */
 function showPopup(tipo, titulo, mensagem, callbackAoFechar, autoFecharMs) {
   const overlay  = document.getElementById('popup-overlay');
@@ -46,7 +46,7 @@ function showPopup(tipo, titulo, mensagem, callbackAoFechar, autoFecharMs) {
     return;
   }
 
-  // Preenche o conteúdo
+  // Preenche o conteudo
   iconeEl.innerHTML = POPUP_ICONS[tipo] || POPUP_ICONS.warning;
   iconeEl.className = 'popup-icon popup-icon--' + tipo;
   tituloEl.textContent = titulo;
@@ -55,10 +55,10 @@ function showPopup(tipo, titulo, mensagem, callbackAoFechar, autoFecharMs) {
   // Guarda o callback para usar ao fechar
   overlay._callbackAoFechar = callbackAoFechar || null;
 
-  // Acessibilidade: define como visível para leitores de ecrã
+  // Acessibilidade: define como visivel para leitores de ecra
   overlay.setAttribute('aria-hidden', 'false');
 
-  // Activa o popup (a classe dispara a animação CSS)
+  // Activa o popup (animação CSS)
   overlay.classList.add('popup-active');
 
   // Fecha automaticamente se um tempo foi definido

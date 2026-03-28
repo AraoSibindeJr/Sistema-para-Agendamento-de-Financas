@@ -1,48 +1,44 @@
-/* ============================================================
-   style.css — Estilos globais partilhados por todas as páginas
-   Projeto: Sistema de Agendamento IRPS — AT Moçambique
-   ============================================================ */
 
-/* ---- Variáveis de design (tema institucional) ---- */
+/* "Internal point variables" KKKKKKKKKKKK */
 :root {
   /* Cores principais */
-  --azul-escuro:   #1B3A6B;   /* Navbar, títulos, botão primário */
-  --azul-medio:    #2E6DB4;   /* Links activos, destaques */
-  --azul-claro:    #E8EEF7;   /* Fundos de secções, cards leves */
-  --azul-borda:    #C4D3E8;   /* Bordas e divisores */
+  --azul-escuro:   #1B3A6B;
+  --azul-medio:    #2E6DB4; 
+  --azul-claro:    #E8EEF7;  
+  --azul-borda:    #C4D3E8; 
 
   /* Neutros */
   --branco:        #FFFFFF;
-  --cinza-fundo:   #F4F6FA;   /* Fundo geral das páginas */
-  --cinza-card:    #FFFFFF;   /* Fundo dos cards */
-  --cinza-texto:   #4A5568;   /* Texto secundário */
-  --cinza-label:   #718096;   /* Labels de formulário */
-  --preto-titulo:  #1A202C;   /* Títulos principais */
+  --cinza-fundo:   #F4F6FA; 
+  --cinza-card:    #FFFFFF;  
+  --cinza-texto:   #4A5568;   
+  --cinza-label:   #718096; 
+  --preto-titulo:  #1A202C;   
 
   /* Estados */
-  --verde:         #276749;   /* Sucesso */
+  --verde:         #276749; 
   --verde-bg:      #E6F4EE;
-  --vermelho:      #C53030;   /* Erro */
+  --vermelho:      #C53030; 
   --vermelho-bg:   #FEF2F2;
-  --amarelo:       #B7791F;   /* Aviso */
+  --amarelo:       #B7791F;  
   --amarelo-bg:    #FFFBEB;
 
   /* Tipografia */
   --fonte-titulo:  'Source Serif 4', Georgia, serif;
   --fonte-corpo:   'Source Sans 3', system-ui, sans-serif;
 
-  /* Espaçamentos */
+  /* Espacamentos */
   --radius-sm:     4px;
   --radius-md:     8px;
   --radius-lg:     12px;
   --sombra-card:   0 2px 12px rgba(27, 58, 107, 0.08);
   --sombra-hover:  0 4px 20px rgba(27, 58, 107, 0.14);
 
-  /* Transição padrão */
+  /* Transica padrao */
   --transicao:     0.2s ease;
 }
 
-/* ---- Reset básico ---- */
+/* ---- Reset basico ---- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -76,9 +72,7 @@ a {
 }
 a:hover { color: var(--azul-escuro); }
 
-/* ============================================================
-   NAVBAR — Barra de navegação partilhada
-   ============================================================ */
+/* NAVBAR — Barra de navegacao partilhada*/
 .navbar {
   background-color: var(--azul-escuro);
   color: var(--branco);
@@ -93,7 +87,7 @@ a:hover { color: var(--azul-escuro); }
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Logo / Marca */
+/* Logo */
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -145,9 +139,7 @@ a:hover { color: var(--azul-escuro); }
   color: var(--branco);
 }
 
-/* ============================================================
-   BOTÕES
-   ============================================================ */
+/* BOTOES*/
 .btn {
   display: inline-flex;
   align-items: center;
@@ -163,7 +155,7 @@ a:hover { color: var(--azul-escuro); }
   text-decoration: none;
 }
 
-/* Botão primário (azul escuro) */
+/* Botao primario*/
 .btn-primary {
   background-color: var(--azul-escuro);
   color: var(--branco);
@@ -184,7 +176,7 @@ a:hover { color: var(--azul-escuro); }
   box-shadow: none;
 }
 
-/* Botão outline */
+/* Botao outline */
 .btn-outline {
   background-color: transparent;
   color: var(--azul-escuro);
@@ -196,18 +188,16 @@ a:hover { color: var(--azul-escuro); }
   color: var(--azul-escuro);
 }
 
-/* Botão tamanho pequeno */
+/* Botao tamanho pequeno */
 .btn-sm {
   padding: 6px 14px;
   font-size: 0.82rem;
 }
 
-/* Botão largura total */
+/* Botao largura total */
 .btn-full { width: 100%; justify-content: center; }
 
-/* ============================================================
-   POPUP REUTILIZÁVEL
-   ============================================================ */
+/* POPUP REUTILIZAVEL*/
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -243,7 +233,7 @@ a:hover { color: var(--azul-escuro); }
   transform: scale(1);
 }
 
-/* Ícone do popup */
+/* Icone do popup */
 .popup-icon {
   width: 56px;
   height: 56px;
