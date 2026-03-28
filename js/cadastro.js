@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
       validar: function (val) {
         // Aceita formatos com ou sem prefixo +258
         const telLimpo = val.replace(/[\s\-\(\)]/g, '');
-        return /^(\+258|258)?8[234]\d{7}$/.test(telLimpo);
+        return /^(\+258|258)?8[234567]\d{7}$/.test(telLimpo);
       },
       erro: 'Insira um número de telefone moçambicano válido (ex: +258 84 000 0000).'
     },

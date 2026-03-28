@@ -565,9 +565,9 @@ function actualizarResumo() {
   }
 }
 
-// ============================================================
+
 // PERSISTÊNCIA — SessionStorage
-// ============================================================
+
 
 function guardarAgendamentos() {
   sessionStorage.setItem('agendamentosIRPS', JSON.stringify(app.agendamentos));
@@ -580,9 +580,9 @@ function carregarAgendamentos() {
   }
 }
 
-// ============================================================
+
 // UTILITÁRIOS
-// ============================================================
+
 
 /** Formata data 'YYYY-MM-DD' para 'DD de Mês de AAAA' */
 function formatarDataDisplay(dataStr) {
@@ -597,7 +597,7 @@ function formatarData(data) {
   return data.getFullYear() + '-' + padZero(data.getMonth() + 1) + '-' + padZero(data.getDate());
 }
 
-/** Adiciona zero à esquerda (ex: 5 → '05') */
+/** Adiciona zero a esquerda (ex: 5 → '05') */
 function padZero(num) {
   return String(num).padStart(2, '0');
 }
