@@ -1,14 +1,8 @@
-/* ============================================================
-   cadastro.css — Estilos da página de Cadastro
-   ============================================================ */
-
 body {
   background-color: var(--cinza-fundo);
 }
 
-/* ============================================================
-   BARRA DE PROGRESSO (etapas do processo)
-   ============================================================ */
+/*BARRA DE PROGRESSO (etapas do processo)*/
 .steps-bar {
   background: var(--branco);
   border-bottom: 1px solid var(--azul-borda);
@@ -37,7 +31,7 @@ body {
   color: var(--azul-escuro);
 }
 
-/* Círculo numerado */
+/* numeross */
 .step-num {
   width: 28px;
   height: 28px;
@@ -62,7 +56,7 @@ body {
   font-weight: 600;
 }
 
-/* Linha divisória entre etapas */
+/* step divider */
 .step-divider {
   flex: 1;
   height: 1px;
@@ -71,18 +65,13 @@ body {
   max-width: 60px;
 }
 
-/* ============================================================
-   ÁREA PRINCIPAL DO CADASTRO
-   ============================================================ */
+/* AREA PRINCIPAL DO CADASTRO */
 .cadastro-main {
   max-width: 640px;
   margin: 0 auto;
   padding: 32px 24px 48px;
 }
 
-/* ============================================================
-   CARD DO FORMULÁRIO
-   ============================================================ */
 .form-card {
   background: var(--branco);
   border-radius: var(--radius-lg);
@@ -91,7 +80,6 @@ body {
   overflow: hidden;
 }
 
-/* Cabeçalho do card */
 .form-card-header {
   background: linear-gradient(135deg, var(--azul-escuro) 0%, #2E5FA8 100%);
   padding: 28px 32px;
@@ -109,14 +97,11 @@ body {
   font-size: 0.875rem;
 }
 
-/* ============================================================
-   FORMULÁRIO
-   ============================================================ */
+/*FORMULARIO*/
 .cadastro-form {
   padding: 28px 32px;
 }
 
-/* Linha de campos */
 .form-row {
   margin-bottom: 20px;
 }
@@ -135,14 +120,12 @@ body {
   gap: 6px;
 }
 
-/* Label do campo */
 .form-group label {
   font-size: 0.84rem;
   font-weight: 600;
   color: var(--preto-titulo);
 }
 
-/* Asterisco de campo obrigatório */
 .required {
   color: var(--vermelho);
 }
@@ -187,12 +170,11 @@ body {
 .form-error {
   font-size: 0.78rem;
   color: var(--vermelho);
-  display: none; /* visível via JS quando há erro */
+  display: none;
   align-items: center;
   gap: 4px;
 }
 
-/* Torna visível quando tem conteúdo */
 .form-error:not(:empty) {
   display: flex;
 }
@@ -205,9 +187,7 @@ body {
   margin-bottom: 24px;
 }
 
-/* ============================================================
-   ACÇÕES DO FORMULÁRIO
-   ============================================================ */
+/*ACCOES DO FORMULÁRIO*/
 .form-actions {
   display: flex;
   gap: 12px;
@@ -216,9 +196,7 @@ body {
   border-top: 1px solid var(--azul-borda);
 }
 
-/* ============================================================
-   NOTA DE SEGURANÇA
-   ============================================================ */
+/*NOTA DE SEGURANCA*/
 .security-note {
   display: flex;
   align-items: center;
@@ -233,12 +211,10 @@ body {
   flex-shrink: 0;
 }
 
-/* ============================================================
-   RESPONSIVO
-   ============================================================ */
+/*RESPONSIVO*/
 @media (max-width: 600px) {
   .form-row--two {
-    grid-template-columns: 1fr; /* empilha em mobile */
+    grid-template-columns: 1fr;
   }
 
   .cadastro-form {
@@ -263,6 +239,6 @@ body {
   }
 
   .step-label {
-    display: none; /* oculta texto das etapas em mobile pequeno */
+    display: none; /*mobile */
   }
 }

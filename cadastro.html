@@ -10,14 +10,11 @@
 </head>
 <body>
 
-  <!-- ===== NAVBAR ===== -->
+  <!--NAVBAR-->
   <nav class="navbar">
     <div class="navbar-brand">
       <div class="logo-emblem">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M20 8 L24 16 L32 16 L26 21 L28 30 L20 25 L12 30 L14 21 L8 16 L16 16 Z" fill="currentColor" opacity="0.8"/>
-        </svg>
+        <!-- Nao esquece de colocar logo djon -->
       </div>
       <div class="logo-text">
         <span class="logo-title">AT</span>
@@ -25,14 +22,14 @@
       </div>
     </div>
     <div class="navbar-links">
-      <a href="index.html">← Início</a>
+      <a href="index.html">Inicio</a>
     </div>
   </nav>
 
-  <!-- ===== CORPO DA PÁGINA ===== -->
+  <!--CORPO DA PAGINA-->
   <main class="cadastro-main">
 
-    <!-- Barra de progresso / etapas -->
+    <!--Barra de progresso / etapas-->
     <div class="steps-bar">
       <div class="steps-inner">
         <div class="step step--active">
@@ -52,7 +49,7 @@
       </div>
     </div>
 
-    <!-- Card do formulário -->
+    <!-- Card do formulario -->
     <div class="form-card fade-in-up">
       <div class="form-card-header">
         <h2>Registo de Contribuinte</h2>
@@ -61,7 +58,7 @@
 
       <form id="cadastroForm" class="cadastro-form" novalidate>
 
-        <!-- Linha 1: Nome completo -->
+        <!-- Nome completo -->
         <div class="form-row">
           <div class="form-group">
             <label for="nomeCompleto">Nome Completo <span class="required">*</span></label>
@@ -69,15 +66,15 @@
               type="text"
               id="nomeCompleto"
               name="nomeCompleto"
-              placeholder="Ex: João Carlos Machava"
+              placeholder="Ex: Benjamim Junior Mangave"
               autocomplete="name"
             />
-            <!-- Mensagem de erro que aparece com JS -->
+            <!-- Mensagem de erro (JS) -->
             <span class="form-error" id="err-nomeCompleto"></span>
           </div>
         </div>
 
-        <!-- Linha 2: NUIT + BI -->
+        <!-- NUIT + BI -->
         <div class="form-row form-row--two">
           <div class="form-group">
             <label for="nuit">NUIT <span class="required">*</span></label>
@@ -96,13 +93,13 @@
               type="text"
               id="documentoIdentidade"
               name="documentoIdentidade"
-              placeholder="Ex: 123456789B"
+              placeholder="Ex: 123456789I"
             />
             <span class="form-error" id="err-documentoIdentidade"></span>
           </div>
         </div>
 
-        <!-- Linha 3: Data nascimento + Telefone -->
+        <!-- Data nascimento + Telefone -->
         <div class="form-row form-row--two">
           <div class="form-group">
             <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
@@ -126,7 +123,7 @@
           </div>
         </div>
 
-        <!-- Linha 4: Email -->
+        <!-- Email -->
         <div class="form-row">
           <div class="form-group">
             <label for="email">Endereço de Email <span class="required">*</span></label>
@@ -134,24 +131,22 @@
               type="email"
               id="email"
               name="email"
-              placeholder="Ex: joao.machava@email.com"
+              placeholder="Ex: benjamim.junior@email.com"
               autocomplete="email"
             />
             <span class="form-error" id="err-email"></span>
           </div>
         </div>
 
-        <!-- Aviso de campos obrigatórios -->
+
         <p class="required-note"><span class="required">*</span> Campos obrigatórios</p>
 
-        <!-- Botão de submissão -->
+        <!-- Botao de submissao -->
         <div class="form-actions">
           <a href="index.html" class="btn btn-outline">Cancelar</a>
           <button type="submit" class="btn btn-primary" id="btnSubmit">
             Continuar para Agendamento
-            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-            </svg>
+        
           </button>
         </div>
 
@@ -168,7 +163,7 @@
 
   </main>
 
-  <!-- ===== POPUP (componente reutilizável) ===== -->
+  <!-- ===== POPUP (reutilizavel) ===== -->
   <div id="popup-overlay" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="popup-box" id="popup-box">
       <div class="popup-icon" id="popup-icon"></div>

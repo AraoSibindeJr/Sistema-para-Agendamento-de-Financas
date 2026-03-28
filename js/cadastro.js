@@ -1,17 +1,13 @@
-/**
- * cadastro.js — Lógica do Formulário de Cadastro
- * Funcionalidades: validação de campos, submissão, redirecionamento
- */
 
 document.addEventListener('DOMContentLoaded', function () {
 
   const form      = document.getElementById('cadastroForm');
   const btnSubmit = document.getElementById('btnSubmit');
 
-  if (!form) return; // segurança: sai se o formulário não existir
+  if (!form) return; // seguranca: sai se o formulario nao existir
 
-  // === REGRAS DE VALIDAÇÃO ===
-  // Cada campo tem: campo, função validadora, mensagem de erro
+  // EEGRAS DE VALIDACAO
+  // Cada campo tem: campo, funcao validadora, mensagem de erro
   const regrasValidacao = [
     {
       id: 'nomeCompleto',
@@ -58,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   ];
 
-  // === VALIDAÇÃO EM TEMPO REAL (ao sair do campo) ===
+  // VALIDACAO EM TEMPO REAL (ao sair do campo)
   regrasValidacao.forEach(function (regra) {
     const input = document.getElementById(regra.id);
     if (!input) return;
@@ -76,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // === SUBMISSÃO DO FORMULÁRIO ===
+  // SUBMISSAO DO FORM
   form.addEventListener('submit', function (e) {
-    e.preventDefault(); // impede o reload da página
+    e.preventDefault(); // impede o reload da pagina
 
     let formularioValido = true;
 
@@ -94,13 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (!formularioValido) {
-      // Mostra popup de erro genérico
+      // Mostra popup de erro
       showPopup('error', 'Dados Inválidos', 'Por favor, corrija os campos assinalados antes de continuar.');
       return;
     }
 
-    // === GUARDA OS DADOS NO SESSIONSTORAGE ===
-    // SessionStorage: dados guardados durante a sessão do browser
+    // GUARDA DADOS NO SESSIONSTORAGE
+    // SessionStorage: dados guardados durante a sessao do browser
     const dadosUtilizador = {
       nomeCompleto:        document.getElementById('nomeCompleto').value.trim(),
       nuit:                document.getElementById('nuit').value.trim(),
@@ -118,10 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
       'Cadastro Realizado',
       'Os seus dados foram registados. A redirecionar para o painel...',
       function () {
-        // Esta função é chamada quando o utilizador fecha o popup
+        // close popup
         window.location.href = 'main.html';
       },
-      2000 // fecha automaticamente em 2 segundos
+      2000 // fecha soz em 2 segundos
     );
 
     // Feedback visual no botão
@@ -130,13 +126,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  // === FUNÇÕES AUXILIARES ===
+  // AUXILIARES
 
   /**
    * Valida um campo individual e mostra/esconde mensagem de erro
    * @param {object} regra - Objecto com { id, validar, erro }
    * @param {string} valor - Valor actual do campo
-   * @returns {boolean} - true se válido, false se inválido
+   * @returns {boolean} - true se valido, false se invalido
    */
   function validarCampo(regra, valor) {
     const input    = document.getElementById(regra.id);
@@ -146,12 +142,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!input) return true;
 
     if (!valido) {
-      // Marca o campo como inválido
       input.classList.add('input-error');
       input.classList.remove('input-success');
       if (errSpan) errSpan.textContent = regra.erro;
     } else {
-      // Marca o campo como válido
       input.classList.remove('input-error');
       input.classList.add('input-success');
       if (errSpan) errSpan.textContent = '';
@@ -160,9 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return valido;
   }
 
-  /**
-   * Remove o estado de erro de um campo
-   */
+
   function limparErroCampo(id, input) {
     const errSpan = document.getElementById('err-' + id);
     input.classList.remove('input-error');
