@@ -1,13 +1,13 @@
 
 /* "Internal point variables" KKKKKKKKKKKK */
 :root {
-  /* Cores principais */
+  
   --azul-escuro:   #1B3A6B;
   --azul-medio:    #2E6DB4; 
   --azul-claro:    #E8EEF7;  
   --azul-borda:    #C4D3E8; 
 
-  /* Neutros */
+  
   --branco:        #FFFFFF;
   --cinza-fundo:   #F4F6FA; 
   --cinza-card:    #FFFFFF;  
@@ -15,7 +15,7 @@
   --cinza-label:   #718096; 
   --preto-titulo:  #1A202C;   
 
-  /* Estados */
+  
   --verde:         #276749; 
   --verde-bg:      #E6F4EE;
   --vermelho:      #C53030; 
@@ -23,22 +23,22 @@
   --amarelo:       #B7791F;  
   --amarelo-bg:    #FFFBEB;
 
-  /* Tipografia */
+  
   --fonte-titulo:  'Source Serif 4', Georgia, serif;
   --fonte-corpo:   'Source Sans 3', system-ui, sans-serif;
 
-  /* Espacamentos */
+ 
   --radius-sm:     4px;
   --radius-md:     8px;
   --radius-lg:     12px;
   --sombra-card:   0 2px 12px rgba(27, 58, 107, 0.08);
   --sombra-hover:  0 4px 20px rgba(27, 58, 107, 0.14);
 
-  /* Transica padrao */
+
   --transicao:     0.2s ease;
 }
 
-/* ---- Reset basico ---- */
+/* Reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -58,7 +58,6 @@ body {
   min-height: 100vh;
 }
 
-/* ---- Tipografia ---- */
 h1, h2, h3, h4 {
   font-family: var(--fonte-titulo);
   color: var(--preto-titulo);
@@ -72,7 +71,7 @@ a {
 }
 a:hover { color: var(--azul-escuro); }
 
-/* NAVBAR — Barra de navegacao partilhada*/
+/* NAVBAR*/
 .navbar {
   background-color: var(--azul-escuro);
   color: var(--branco);
@@ -97,7 +96,7 @@ a:hover { color: var(--azul-escuro); }
 .logo-emblem {
   width: 36px;
   height: 36px;
-  color: #A8C8F0; /* dourado-azulado */
+  color: #A8C8F0;
   flex-shrink: 0;
 }
 
@@ -188,7 +187,7 @@ a:hover { color: var(--azul-escuro); }
   color: var(--azul-escuro);
 }
 
-/* Botao tamanho pequeno */
+/* Botao pequeno */
 .btn-sm {
   padding: 6px 14px;
   font-size: 0.82rem;
@@ -264,9 +263,7 @@ a:hover { color: var(--azul-escuro); }
 
 .popup-actions { display: flex; justify-content: center; gap: 12px; }
 
-/* ============================================================
-   ANIMAÇÕES DE ENTRADA
-   ============================================================ */
+/*ANIMACOES DE ENTRADA*/
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -286,9 +283,7 @@ a:hover { color: var(--azul-escuro); }
   opacity: 0;
 }
 
-/* ============================================================
-   RESPONSIVO — Ajustes para ecrãs pequenos
-   ============================================================ */
+/*RESPONSIVO*/
 @media (max-width: 768px) {
   .navbar {
     padding: 0 16px;

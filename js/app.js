@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          // Adiciona a animacao quando o elemento entra no ecrã
+          // Adiciona a animacao quando o elemento entra no ecra
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
           observer.unobserve(entry.target); // Para de observar apos animar

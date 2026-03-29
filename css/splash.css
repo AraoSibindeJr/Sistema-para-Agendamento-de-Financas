@@ -18,12 +18,10 @@ body {
   padding: 56px 0 40px;
 }
 
-/* texto do hero */
 .hero-content {
   max-width: 520px;
 }
 
-/* Badge de identificacao institucional */
 .hero-badge {
   display: inline-block;
   background-color: var(--azul-claro);

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!form) return; // seguranca: sai se o formulario nao existir
 
-  // EEGRAS DE VALIDACAO
+  // REGRAS DE VALIDACAO
   // Cada campo tem: campo, funcao validadora, mensagem de erro
   const regrasValidacao = [
     {

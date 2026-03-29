@@ -1,7 +1,7 @@
 /**
  * main.js — Lógica do Painel Principal
  * Funcionalidades:
- *   - Navegação entre secções (sidebar)
+ *   - Navegação entre seccoes (sidebar)
  *   - Calendário interactivo
  *   - Agendamento de pagamentos
  *   - Cancelamento de agendamentos
@@ -10,7 +10,7 @@
  */
 
 // ============================================================
-// ESTADO GLOBAL DA APLICAÇÃO
+// ESTADO GLOBAL DA APLICACAO
 // Guarda todos os dados da sessão em memória
 // ============================================================
 const app = {
@@ -534,9 +534,8 @@ function preencherPerfil() {
   });
 }
 
-// ============================================================
 // RESUMO DA SIDEBAR
-// ============================================================
+
 
 function actualizarResumo() {
   const totalEl    = document.getElementById('totalAgendamentos');
@@ -550,7 +549,7 @@ function actualizarResumo() {
     if (activos.length === 0) {
       proximoEl.textContent = '—';
     } else {
-      // Encontra o próximo agendamento (data mais próxima no futuro)
+      // Encontra o proximo agendamento (data mais próxima no futuro)
       const hoje = new Date();
       const futuros = activos.filter(function (ag) { return new Date(ag.data) >= hoje; });
       futuros.sort(function (a, b) { return a.data.localeCompare(b.data); });
@@ -566,7 +565,7 @@ function actualizarResumo() {
 }
 
 
-// PERSISTÊNCIA — SessionStorage
+// PERSISTENCIA — SessionStorage
 
 
 function guardarAgendamentos() {
@@ -581,10 +580,10 @@ function carregarAgendamentos() {
 }
 
 
-// UTILITÁRIOS
+// UTILITARIOS
 
 
-/** Formata data 'YYYY-MM-DD' para 'DD de Mês de AAAA' */
+/** Formata data 'YYYY-MM-DD' para 'DD de Mes de AAAA' */
 function formatarDataDisplay(dataStr) {
   if (!dataStr) return '—';
   const partes = dataStr.split('-');

@@ -1,14 +1,8 @@
-/* ============================================================
-   main.css — Estilos do Painel Principal (main.html)
-   ============================================================ */
-
 body {
   background-color: var(--cinza-fundo);
 }
 
-/* ============================================================
-   NAVBAR — Extensões específicas do painel
-   ============================================================ */
+/*NAVBAR*/
 .navbar-user {
   display: flex;
   align-items: center;
@@ -20,7 +14,6 @@ body {
   font-size: 0.875rem;
 }
 
-/* Avatar circular do utilizador */
 .navbar-avatar {
   width: 32px;
   height: 32px;
@@ -35,7 +28,6 @@ body {
   text-transform: uppercase;
 }
 
-/* Botão de sair */
 .btn-sair {
   display: inline-flex;
   align-items: center;
@@ -54,18 +46,14 @@ body {
   color: var(--branco);
 }
 
-/* ============================================================
-   LAYOUT PRINCIPAL — Sidebar + Conteúdo
-   ============================================================ */
+/*LAYOUT PRINCIPAL*/
 .main-layout {
   display: grid;
   grid-template-columns: 220px 1fr;
   min-height: calc(100vh - 60px);
 }
 
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
+/* SIDEBAR*/
 .sidebar {
   background: var(--branco);
   border-right: 1px solid var(--azul-borda);
@@ -147,15 +135,11 @@ body {
   color: var(--azul-escuro);
 }
 
-/* ============================================================
-   ÁREA DE CONTEÚDO
-   ============================================================ */
 .content-area {
   padding: 28px;
   overflow-y: auto;
 }
 
-/* Secções: ocultas por padrão, mostradas via JS */
 .content-section {
   display: none;
 }
@@ -164,7 +148,6 @@ body {
   display: block;
 }
 
-/* Cabeçalho de cada secção */
 .section-header {
   margin-bottom: 24px;
   display: flex;
@@ -183,9 +166,7 @@ body {
   color: var(--cinza-texto);
 }
 
-/* ============================================================
-   CALENDÁRIO
-   ============================================================ */
+/* CALENDARIO */
 .calendar-layout {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -193,7 +174,6 @@ body {
   align-items: start;
 }
 
-/* Card do calendário */
 .calendar-card {
   background: var(--branco);
   border-radius: var(--radius-lg);
@@ -202,7 +182,6 @@ body {
   padding: 20px;
 }
 
-/* Navegação do calendário (mês / setas) */
 .calendar-nav {
   display: flex;
   align-items: center;
@@ -259,7 +238,7 @@ body {
   gap: 4px;
 }
 
-/* Célula de cada dia */
+/* Cada dia */
 .cal-day {
   aspect-ratio: 1;
   display: flex;
@@ -273,7 +252,7 @@ body {
   position: relative;
 }
 
-/* Dia normal (disponível) */
+/* Dia normal (disponivel) */
 .cal-day--available:hover {
   background: var(--azul-claro);
   border-color: var(--azul-medio);
@@ -296,7 +275,6 @@ body {
   border-color: var(--azul-medio);
 }
 
-/* Ponto indicador abaixo do número */
 .cal-day--scheduled::after {
   content: '';
   position: absolute;
@@ -325,7 +303,7 @@ body {
   color: var(--azul-medio);
 }
 
-/* Legenda do calendário */
+/* Legenda calendario */
 .calendar-legend {
   display: flex;
   gap: 16px;
@@ -355,9 +333,8 @@ body {
 .legend-dot--scheduled  { background: var(--azul-claro); border-color: var(--azul-medio); }
 .legend-dot--past       { background: #E2E8F0; }
 
-/* ============================================================
-   PAINEL DE CONFIRMAÇÃO DE AGENDAMENTO
-   ============================================================ */
+
+/*PAINEL DE CONFIRMACAO DE AGENDAMENTO*/
 .booking-panel {
   background: var(--branco);
   border-radius: var(--radius-lg);
@@ -406,7 +383,6 @@ body {
   font-style: italic;
 }
 
-/* Seleção de horários */
 .time-selection {
   margin-bottom: 20px;
 }
@@ -449,9 +425,7 @@ body {
   color: var(--branco);
 }
 
-/* ============================================================
-   FILTROS DOS AGENDAMENTOS
-   ============================================================ */
+/*FILTROS DOS AGENDAMENTOS*/
 .filter-bar {
   display: flex;
   gap: 8px;
@@ -483,16 +457,14 @@ body {
   color: var(--branco);
 }
 
-/* ============================================================
-   LISTA DE AGENDAMENTOS
-   ============================================================ */
+/*LISTA DE AGENDAMENTOS*/
 .agendamentos-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* Card de um agendamento */
+/* Card de 1 agendamento */
 .agendamento-card {
   background: var(--branco);
   border-radius: var(--radius-lg);
@@ -509,7 +481,7 @@ body {
   box-shadow: var(--sombra-hover);
 }
 
-/* Ícone de data */
+/* Icone data */
 .ag-date-block {
   min-width: 52px;
   height: 52px;
@@ -537,7 +509,7 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* Informações do agendamento */
+/* Informacoes do agendamento */
 .ag-info {
   flex: 1;
 }
@@ -574,7 +546,6 @@ body {
   color: var(--vermelho);
 }
 
-/* Botão de cancelar */
 .ag-cancel-btn {
   padding: 6px 12px;
   font-size: 0.78rem;
@@ -615,9 +586,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* ============================================================
-   PERFIL DO UTILIZADOR
-   ============================================================ */
+/*PERFIL DO UTILIZADOR*/
 .profile-card {
   background: var(--branco);
   border-radius: var(--radius-lg);
@@ -629,7 +598,7 @@ body {
   align-items: flex-start;
 }
 
-/* Avatar grande do perfil */
+
 .profile-avatar {
   width: 72px;
   height: 72px;
@@ -675,18 +644,16 @@ body {
   margin-top: 20px;
 }
 
-/* ============================================================
-   RESPONSIVO
-   ============================================================ */
+/*RESPONSIVIDADE*/
 @media (max-width: 1024px) {
   .calendar-layout {
-    grid-template-columns: 1fr; /* calendário empilhado */
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
   .main-layout {
-    grid-template-columns: 1fr; /* sidebar oculta / empilhada */
+    grid-template-columns: 1fr;
   }
 
   .sidebar {
