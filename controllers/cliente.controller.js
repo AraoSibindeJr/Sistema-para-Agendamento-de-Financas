@@ -32,6 +32,19 @@ class ClienteController {
         });
 
     }
+
+    login = async (req, res) => {
+        const { email } = req.body;
+
+        const saved = await clienteModel.find({email});
+
+        const { _id } = saved;
+
+        res.status(200).json({ 
+            message: "Login effectuado com sucesso!",
+            data: _id
+        })
+    }
 }
 
 export default ClienteController;

@@ -7,7 +7,7 @@ const clienteSchema = mongoose.Schema({
     identif: { type: String, required: true},
     dataNascimento: { type: String },
     nrTelefone: { type: String, required: true },
-    email: { type: String, required: true }
+    email: { type: String, required: true, unique: true }
 });
 
 const clienteModel = mongoose.model("cliente", clienteSchema);
