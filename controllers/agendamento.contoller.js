@@ -1,4 +1,4 @@
-import { agendamentoModel } from "../models/agendamendo.model";
+import { agendamentoModel } from "../models/agendamento.model.js";
 
 
 class AgendamentoController {
@@ -41,6 +41,18 @@ class AgendamentoController {
         });
     }
 
+    listaPorUserId = async (req, res) => {
+
+        const { userId } = req.body;
+
+        const agendamentos = await agendamentoModel.find({ userId });
+
+        res.status(200).json({
+            message: `Agendamentos do user: ${userId}`,
+            data: agendamentos
+        });
+    }
+
     listarAgendamentos = async (req, res) => {
         const { identif } = req.body
 
@@ -67,4 +79,4 @@ class AgendamentoController {
     }
 }
 
-export default AgendamentoController;
+export {AgendamentoController};

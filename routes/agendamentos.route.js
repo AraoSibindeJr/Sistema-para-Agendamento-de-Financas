@@ -1,5 +1,5 @@
 import Router from "express";
-import AgendamentoController from"../controllers/agendamento.controller.js";
+import { AgendamentoController } from '../controllers/agendamento.contoller.js';
 
 
 const agendamentoRouter = Router();

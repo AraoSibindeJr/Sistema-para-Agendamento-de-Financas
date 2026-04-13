@@ -1,11 +1,9 @@
-import { agendamentoModel } from "../models/agendamendo.model.js";
-
-
+import { clienteModel } from "../models/cliente.model.js";
 
 class ClienteController {
 
 
-    criarAgendamento = async (req, res) => {
+    cadastrar = async (req, res) => {
 
         const { 
             nomeCompleto,
@@ -17,16 +15,13 @@ class ClienteController {
         } = req.body;
 
 
-        const newCliente = new agendamentoModel({
+        const newCliente = new clienteModel({
             nomeCompleto,
             nuit,
             identif,
             dataNascimento,
             nrTelefone,
-            email,
-            dataAg,
-            horarioAgendamento,
-            status: "ativo"
+            email
         });
 
         await newCliente.save().then(() => console.log("Cliente cadastrado com sucesso!"));
