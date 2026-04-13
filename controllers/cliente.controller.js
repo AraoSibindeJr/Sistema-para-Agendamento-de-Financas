@@ -36,13 +36,13 @@ class ClienteController {
     login = async (req, res) => {
         const { email } = req.body;
 
-        const saved = await clienteModel.find({email});
+        const saved = await clienteModel.findOne({email});
 
-        const { _id } = saved;
+        const id = saved._id;
 
         res.status(200).json({ 
             message: "Login effectuado com sucesso!",
-            data: _id
+            data: id
         })
     }
 }
