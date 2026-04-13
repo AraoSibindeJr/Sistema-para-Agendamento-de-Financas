@@ -13,6 +13,15 @@ Content-Type: application/json
     "email": "maria.tembe@email.com"
 }
 
+### LOGIN
+
+POST http://localhost:8080/api/v1/cliente/login
+Content-Type: application/json
+
+{
+    "email": "maria.tembe@email.com"
+}
+
 ### CRIAR AGENDAMENTO
 POST http://localhost:8080/api/v1/agendamentos/criar
 Content-Type: application/json

@@ -7,5 +7,6 @@ const clienteRoutes = Router();
 const controller = new ClienteController();
 
 clienteRoutes.post("/cadastrar", controller.cadastrar);
+clienteRoutes.post("/login", controller.login);
 
 export { clienteRoutes };
