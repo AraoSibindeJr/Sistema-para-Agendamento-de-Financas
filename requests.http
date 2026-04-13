@@ -1,0 +1,41 @@
+
+
+### CRIAR
+
+POST http://localhost:8080/api/v1/criar
+Content-Type: application/json
+
+{
+    "nomeCompleto": "Maria Celeste Tembe",
+    "nuit": "556677889",
+    "identif": "BI99887766",
+    "dataNascimento": "1995-09-17",
+    "nrTelefone": "+258849998877",
+    "email": "maria.tembe@email.com",
+    "dataAg": "2026-04-23",
+    "horarioAgendamento": "11:15",
+    "status": "ativo"
+}
+
+
+### CANCELAR
+
+PUT http://localhost:8080/api/v1/cancelar
+Content-Type: application/json
+
+{
+    "id": "69dc9ed06fb14f6f0a3f255c"
+}
+
+### LISTAR
+
+GET http://localhost:8080/api/v1/listar
+Content-Type: application/json
+
+{
+    "identif": "BI99887766"
+}
+
+### LISTAR POR STATUS
+
+GET http://localhost:8080/api/v1/listar-status?identif=BI99887766&status=ativo
