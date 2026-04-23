@@ -10,7 +10,7 @@ agendamentoRouter.post("/criar", controller.criarAgendamento);
 
 agendamentoRouter.put("/cancelar", controller.cancelarAgendamento);
 
-agendamentoRouter.get("/listar", controller.listarAgendamentos);
+agendamentoRouter.get("/listar/:userId", controller.listaPorUserId);
 
 agendamentoRouter.get("/listar-status", controller.listarAgendamentosPostStatus);
 

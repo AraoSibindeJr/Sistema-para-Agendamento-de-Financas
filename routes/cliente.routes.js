@@ -8,5 +8,6 @@ const controller = new ClienteController();
 
 clienteRoutes.post("/cadastrar", controller.cadastrar);
 clienteRoutes.post("/login", controller.login);
+clienteRoutes.get("/whoami/:email", controller.whoAmI);
 
 export { clienteRoutes };

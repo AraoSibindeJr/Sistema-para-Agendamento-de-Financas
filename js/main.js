@@ -1,602 +1,402 @@
-/**
- * main.js — Lógica do Painel Principal
- * Funcionalidades:
- *   - Navegação entre seccoes (sidebar)
- *   - Calendário interactivo
- *   - Agendamento de pagamentos
- *   - Cancelamento de agendamentos
- *   - Filtro de agendamentos
- *   - Exibição do perfil do utilizador
- */
-
-// ============================================================
-// ESTADO GLOBAL DA APLICACAO
-// Guarda todos os dados da sessão em memória
-// ============================================================
 const app = {
-  // Dados do utilizador (carregados do sessionStorage)
   utilizador: null,
-
-  // Lista de agendamentos (array de objectos)
   agendamentos: [],
-
-  // Estado do calendário
   calendario: {
     ano: 0,
-    mes: 0,         // 0 = Janeiro, 11 = Dezembro
-    dataSelecionada: null,   // string 'YYYY-MM-DD'
-    horarioSelecionado: null // string 'HH:MM'
+    mes: 0,
+    dataSelecionada: null,
+    horarioSelecionado: null
   },
-
-  // Filtro activo na lista de agendamentos
   filtroActivo: 'todos'
 };
 
-// ============================================================
-// INICIALIZAÇÃO — Corre quando a página carrega
-// ============================================================
 document.addEventListener('DOMContentLoaded', function () {
+  try {
+    console.log("INIT OK");
 
-  // 1. Carrega os dados do utilizador
-  carregarUtilizador();
+    carregarUtilizador();
 
-  // 2. Inicializa o calendário no mês actual
-  const hoje = new Date();
-  app.calendario.ano = hoje.getFullYear();
-  app.calendario.mes = hoje.getMonth();
-  renderizarCalendario();
+    const hoje = new Date();
+    app.calendario.ano = hoje.getFullYear();
+    app.calendario.mes = hoje.getMonth();
 
-  // 3. Carrega agendamentos guardados (se existirem)
-  carregarAgendamentos();
+    renderizarCalendario();
+    carregarAgendamentos();
 
-  // 4. Inicializa eventos dos botões
-  inicializarEventos();
+    inicializarEventos();
 
-  // 5. Preenche os dados do perfil
-  preencherPerfil();
-
-  // 6. Actualiza o resumo da sidebar
-  actualizarResumo();
-
+  } catch (e) {
+    console.error("ERRO INIT:", e);
+  }
 });
 
-// ============================================================
-// DADOS DO UTILIZADOR
-// ============================================================
-
-/**
- * Carrega o utilizador guardado no sessionStorage
- * Se não existir, redireciona para o cadastro
- */
 function carregarUtilizador() {
   const dados = sessionStorage.getItem('utilizadorIRPS');
 
   if (!dados) {
-    // Utilizador não fez cadastro — redireciona
     window.location.href = 'cadastro.html';
     return;
   }
 
   app.utilizador = JSON.parse(dados);
 
-  // Actualiza o nome na navbar
-  const primeiroNome = app.utilizador.nomeCompleto.split(' ')[0];
-  const navbarUsername = document.getElementById('navbarUsername');
-  const navbarAvatar   = document.getElementById('navbarAvatar');
-
-  if (navbarUsername) navbarUsername.textContent = primeiroNome;
-  if (navbarAvatar)   navbarAvatar.textContent = primeiroNome[0].toUpperCase();
-}
-
-// ============================================================
-// NAVEGAÇÃO ENTRE SECÇÕES (Sidebar)
-// ============================================================
-
-/**
- * Mostra uma secção e esconde as outras
- * @param {string} nomeSeccao - 'calendario', 'agendamentos' ou 'perfil'
- */
-function showSection(nomeSeccao) {
-  // Esconde todas as secções
-  document.querySelectorAll('.content-section').forEach(function (sec) {
-    sec.classList.remove('content-section--active');
-  });
-
-  // Remove classe activa de todos os links da sidebar
-  document.querySelectorAll('.sidebar-link').forEach(function (link) {
-    link.classList.remove('sidebar-link--active');
-  });
-
-  // Mostra a secção pedida
-  const seccaoEl = document.getElementById('section-' + nomeSeccao);
-  if (seccaoEl) seccaoEl.classList.add('content-section--active');
-
-  // Marca o link activo
-  const linkActivo = document.querySelector('[data-section="' + nomeSeccao + '"]');
-  if (linkActivo) linkActivo.classList.add('sidebar-link--active');
-
-  // Se vai para agendamentos, re-renderiza a lista
-  if (nomeSeccao === 'agendamentos') {
-    renderizarListaAgendamentos();
+  if (app.utilizador?._id) {
+    sessionStorage.setItem('userId', app.utilizador._id);
   }
+
+  const primeiroNome =
+    app.utilizador?.nomeCompleto?.split(' ')[0] || 'User';
+
+  document.getElementById('navbarUsername').textContent = primeiroNome;
+  document.getElementById('navbarAvatar').textContent = primeiroNome[0].toUpperCase();
+
+  actualizarPainelConfirmacao();
+  carregarPerfil();
 }
 
-// Inicializa os cliques da sidebar
+function showSection(sec) {
+  document.querySelectorAll('.content-section').forEach(e =>
+    e.classList.remove('content-section--active')
+  );
+
+  document.querySelectorAll('.sidebar-link').forEach(e =>
+    e.classList.remove('sidebar-link--active')
+  );
+
+  document.getElementById('section-' + sec)?.classList.add('content-section--active');
+  document.querySelector(`[data-section="${sec}"]`)?.classList.add('sidebar-link--active');
+
+  if (sec === 'agendamentos') renderizarListaAgendamentos();
+}
+window.showSection = showSection;
+
 function inicializarEventos() {
-  // Links da sidebar
-  document.querySelectorAll('.sidebar-link').forEach(function (link) {
-    link.addEventListener('click', function (e) {
+
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', e => {
       e.preventDefault();
-      const seccao = link.getAttribute('data-section');
-      if (seccao) showSection(seccao);
+      showSection(link.dataset.section);
     });
   });
 
-  // Botões de navegação do calendário
-  document.getElementById('prevMonth').addEventListener('click', function () {
+  document.getElementById('btnAgendar')?.addEventListener('click', confirmarAgendamento);
+
+  document.getElementById('prevMonth').addEventListener('click', () => {
     app.calendario.mes--;
     if (app.calendario.mes < 0) {
       app.calendario.mes = 11;
       app.calendario.ano--;
     }
-    app.calendario.dataSelecionada = null;
-    app.calendario.horarioSelecionado = null;
-    actualizarPainelConfirmacao();
+    resetSelecao();
     renderizarCalendario();
   });
 
-  document.getElementById('nextMonth').addEventListener('click', function () {
+  document.getElementById('nextMonth').addEventListener('click', () => {
     app.calendario.mes++;
     if (app.calendario.mes > 11) {
       app.calendario.mes = 0;
       app.calendario.ano++;
     }
-    app.calendario.dataSelecionada = null;
-    app.calendario.horarioSelecionado = null;
-    actualizarPainelConfirmacao();
+    resetSelecao();
     renderizarCalendario();
   });
 
-  // Botão de confirmar agendamento
-  const btnAgendar = document.getElementById('btnAgendar');
-  if (btnAgendar) {
-    btnAgendar.addEventListener('click', confirmarAgendamento);
-  }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b =>
+        b.classList.remove('filter-btn--active')
+      );
 
-  // Filtros da lista de agendamentos
-  document.querySelectorAll('.filter-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      // Remove activo de todos
-      document.querySelectorAll('.filter-btn').forEach(function (b) {
-        b.classList.remove('filter-btn--active');
-      });
-      // Activa este botão
       btn.classList.add('filter-btn--active');
-      app.filtroActivo = btn.getAttribute('data-filter');
+      app.filtroActivo = btn.dataset.filter;
+
       renderizarListaAgendamentos();
     });
   });
-}
 
-// ============================================================
-// CALENDÁRIO INTERACTIVO
-// ============================================================
+  document.querySelectorAll('.time-slot').forEach(btn => {
+    btn.addEventListener('click', () => {
 
-// Nomes dos meses em português
-const MESES = [
-  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-];
+      document.querySelectorAll('.time-slot')
+        .forEach(b => b.classList.remove('active'));
 
-/**
- * Renderiza o calendário para o mês/ano actual no estado
- */
-function renderizarCalendario() {
-  const { ano, mes } = app.calendario;
-  const grid = document.getElementById('calendarGrid');
-  const tituloMes = document.getElementById('calMonthYear');
+      btn.classList.add('active');
 
-  if (!grid || !tituloMes) return;
+      app.calendario.horarioSelecionado = btn.dataset.time;
 
-  // Actualiza o título do mês
-  tituloMes.textContent = MESES[mes] + ' ' + ano;
-
-  // Limpa a grelha
-  grid.innerHTML = '';
-
-  // Obtém as datas com agendamentos activos
-  const datasAgendadas = app.agendamentos
-    .filter(function (ag) { return ag.estado === 'activo'; })
-    .map(function (ag) { return ag.data; });
-
-  // Dia da semana em que começa o mês (0=Dom, 1=Seg, ...)
-  const primeiroDia = new Date(ano, mes, 1).getDay();
-
-  // Total de dias no mês
-  const totalDias = new Date(ano, mes + 1, 0).getDate();
-
-  // Data de hoje para comparar
-  const hoje = new Date();
-  const hojeStr = formatarData(hoje);
-
-  // Células vazias antes do primeiro dia
-  for (let i = 0; i < primeiroDia; i++) {
-    const celVazia = document.createElement('div');
-    celVazia.className = 'cal-day cal-day--empty';
-    grid.appendChild(celVazia);
-  }
-
-  // Células dos dias
-  for (let dia = 1; dia <= totalDias; dia++) {
-    const dataStr = ano + '-' + padZero(mes + 1) + '-' + padZero(dia);
-    const dataObj = new Date(ano, mes, dia);
-    const cel = document.createElement('div');
-    cel.textContent = dia;
-
-    // Define as classes do dia
-    let classes = ['cal-day'];
-
-    if (dataObj < new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())) {
-      // Dia passado
-      classes.push('cal-day--past');
-    } else {
-      // Dia disponível
-      classes.push('cal-day--available');
-
-      // Verifica se tem agendamento
-      if (datasAgendadas.includes(dataStr)) {
-        classes.push('cal-day--scheduled');
-      }
-
-      // Verifica se é hoje
-      if (dataStr === hojeStr) {
-        classes.push('cal-day--today');
-      }
-
-      // Verifica se está selecionado
-      if (dataStr === app.calendario.dataSelecionada) {
-        classes.push('cal-day--selected');
-      }
-
-      // Adiciona evento de clique (só em dias disponíveis)
-      cel.addEventListener('click', function () {
-        selecionarDia(dataStr);
-      });
-    }
-
-    cel.className = classes.join(' ');
-    grid.appendChild(cel);
-  }
-}
-
-/**
- * Seleciona um dia no calendário
- * @param {string} dataStr - Data no formato 'YYYY-MM-DD'
- */
-function selecionarDia(dataStr) {
-  app.calendario.dataSelecionada = dataStr;
-  app.calendario.horarioSelecionado = null;
-
-  // Re-renderiza para mostrar o dia selecionado
-  renderizarCalendario();
-
-  // Mostra o painel de confirmação com a data
-  actualizarPainelConfirmacao();
-
-  // Mostra os horários disponíveis
-  const timeSelection = document.getElementById('timeSelection');
-  if (timeSelection) {
-    timeSelection.style.display = 'block';
-
-    // Remove selecção anterior dos horários
-    document.querySelectorAll('.time-slot').forEach(function (slot) {
-      slot.classList.remove('time-slot--selected');
-      slot.addEventListener('click', function () {
-        selecionarHorario(slot.getAttribute('data-time'), slot);
-      });
+      verificarBotao();
     });
-  }
-
-  // Desactiva o botão de confirmar até selecionar horário
-  document.getElementById('btnAgendar').disabled = true;
-}
-
-/**
- * Seleciona um horário
- */
-function selecionarHorario(hora, elemento) {
-  app.calendario.horarioSelecionado = hora;
-
-  // Visual: remove selecção anterior
-  document.querySelectorAll('.time-slot').forEach(function (s) {
-    s.classList.remove('time-slot--selected');
   });
-  elemento.classList.add('time-slot--selected');
-
-  // Activa o botão de confirmar
-  document.getElementById('btnAgendar').disabled = false;
 }
 
-/**
- * Actualiza o painel de confirmação lateral
- */
-function actualizarPainelConfirmacao() {
-  const dataDisplay  = document.getElementById('selectedDateDisplay');
-  const nomeDisplay  = document.getElementById('bookingUserName');
-  const nuitDisplay  = document.getElementById('bookingNuit');
+async function confirmarAgendamento() {
 
-  if (app.calendario.dataSelecionada) {
-    // Formata a data para exibição
-    const partes = app.calendario.dataSelecionada.split('-');
-    const dataFormatada = partes[2] + ' de ' + MESES[parseInt(partes[1]) - 1] + ' de ' + partes[0];
-    if (dataDisplay) {
-      dataDisplay.textContent = dataFormatada;
-      dataDisplay.classList.remove('booking-value--empty');
-    }
-  } else {
-    if (dataDisplay) {
-      dataDisplay.textContent = 'Nenhuma data selecionada';
-      dataDisplay.classList.add('booking-value--empty');
-    }
-  }
-
-  // Preenche dados do utilizador
-  if (app.utilizador) {
-    if (nomeDisplay) nomeDisplay.textContent = app.utilizador.nomeCompleto;
-    if (nuitDisplay) nuitDisplay.textContent = app.utilizador.nuit;
-  }
-}
-
-// ============================================================
-// AGENDAMENTOS
-// ============================================================
-
-/**
- * Confirma e cria um novo agendamento
- */
-function confirmarAgendamento() {
   if (!app.calendario.dataSelecionada || !app.calendario.horarioSelecionado) {
-    showPopup('warning', 'Selecção Incompleta', 'Por favor, selecione uma data e um horário.');
+    showPopup('warning', 'Selecção Incompleta', 'Selecione data e horário.');
     return;
   }
 
-  // Verifica se já existe agendamento nesta data
-  const jaExiste = app.agendamentos.some(function (ag) {
-    return ag.data === app.calendario.dataSelecionada && ag.estado === 'activo';
-  });
+  try {
 
-  if (jaExiste) {
-    showPopup('warning', 'Data Ocupada', 'Já tem um agendamento activo nesta data. Escolha outra data.');
-    return;
+    const { email } = JSON.parse(sessionStorage.getItem("utilizadorIRPS"));
+    const res = await fetch(`http://localhost:8080/api/v1/cliente/whoami/${email}`);
+    const userData = await res.json();
+    const { userId } = userData;
+    sessionStorage.setItem("userId", userId);
+
+    if (!userId) {
+      showPopup('error', 'Erro', 'Utilizador não autenticado.');
+      return;
+    }
+
+    document.getElementById('btnAgendar').disabled = true;
+
+    const response = await fetch('http://localhost:8080/api/v1/agendamentos/criar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId,
+        dataAg: app.calendario.dataSelecionada,
+        horarioAgendamento: app.calendario.horarioSelecionado,
+        status: 'ativo'
+      })
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error('Resposta inválida do servidor');
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erro ao criar agendamento');
+    }
+
+    showPopup('success', 'Sucesso', 'Agendamento criado com sucesso!');
+
+    resetSelecao();
+
+    await carregarAgendamentos();
+
+  } catch (err) {
+    console.error(err);
+    showPopup('error', 'Erro', err.message || 'Erro ao agendar');
+  } finally {
+    document.getElementById('btnAgendar').disabled = false;
   }
+}
 
-  // Cria o novo agendamento
-  const novoAgendamento = {
-    id:     'AG' + Date.now(), // ID único baseado no timestamp
-    data:   app.calendario.dataSelecionada,
-    hora:   app.calendario.horarioSelecionado,
-    estado: 'activo',
-    tipo:   'IRPS — Imposto sobre o Rendimento',
-    nuit:   app.utilizador ? app.utilizador.nuit : '—'
-  };
+async function carregarAgendamentos() {
+  try {
 
-  app.agendamentos.push(novoAgendamento);
+    const userId = sessionStorage.getItem('userId');
+    if (!userId) return;
 
-  // Guarda no sessionStorage
-  guardarAgendamentos();
+    const res = await fetch(`http://localhost:8080/api/v1/agendamentos/listar/${userId}`);
+    const result = await res.json();
 
-  // Limpa a selecção
+    console.log("Agendamentos", result);
+
+    if (res.ok) {
+      app.agendamentos = result.data.map(ag => ({
+        id: ag._id,
+        data: ag.dataAgendamento
+          ? new Date(ag.dataAgendamento).toISOString().slice(0, 10)
+          : '—',
+        hora: ag.horarioAgendamento,
+        estado: ag.status,
+        tipo: 'IRPS — Imposto sobre o Rendimento',
+        nuit: app.utilizador?.nuit || '—'
+      }));
+    }
+
+    renderizarCalendario();
+    renderizarListaAgendamentos();
+
+  } catch (err) {
+    console.error('Erro ao carregar:', err);
+  }
+}
+
+function resetSelecao() {
   app.calendario.dataSelecionada = null;
   app.calendario.horarioSelecionado = null;
+
   document.getElementById('timeSelection').style.display = 'none';
   document.getElementById('btnAgendar').disabled = true;
+
+  verificarBotao();
   actualizarPainelConfirmacao();
-
-  // Re-renderiza o calendário
-  renderizarCalendario();
-
-  // Actualiza o resumo
-  actualizarResumo();
-
-  // Mostra popup de sucesso
-  showPopup(
-    'success',
-    'Agendamento Confirmado!',
-    'O seu pagamento de IRPS foi agendado com sucesso. Receberá uma confirmação no seu email.'
-  );
 }
 
-/**
- * Cancela um agendamento pelo seu ID
- * @param {string} id - ID do agendamento
- */
-function cancelarAgendamento(id) {
-  const agendamento = app.agendamentos.find(function (ag) { return ag.id === id; });
+function renderizarCalendario() {
+  const grid = document.getElementById('calendarGrid');
+  const titulo = document.getElementById('calMonthYear');
 
-  if (!agendamento) return;
+  if (!grid || !titulo) return;
 
-  // Confirma com o popup
-  showPopup(
-    'warning',
-    'Cancelar Agendamento',
-    'Tem a certeza que deseja cancelar o agendamento de ' + formatarDataDisplay(agendamento.data) + '?',
-    null
-  );
+  const ano = app.calendario.ano;
+  const mes = app.calendario.mes;
 
-  // Para este projecto didáctico, o popup não tem botão "Cancelar/Confirmar" dual.
-  // Implementamos o cancelamento directamente (em produção usaria-se um popup de confirmação).
-  agendamento.estado = 'cancelado';
-  guardarAgendamentos();
-  renderizarListaAgendamentos();
-  renderizarCalendario();
-  actualizarResumo();
+  const nomesMeses = [
+    'Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
+  ];
 
-  showPopup(
-    'success',
-    'Agendamento Cancelado',
-    'O agendamento foi cancelado com sucesso.',
-    null,
-    2000
-  );
-}
+  titulo.textContent = `${nomesMeses[mes]} ${ano}`;
 
-/**
- * Renderiza a lista de agendamentos na secção correspondente
- */
-function renderizarListaAgendamentos() {
-  const lista       = document.getElementById('listaAgendamentos');
-  const emptyState  = document.getElementById('emptyState');
+  grid.innerHTML = '';
 
-  if (!lista) return;
+  const primeiroDia = new Date(ano, mes, 1).getDay();
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
 
-  // Filtra os agendamentos segundo o filtro activo
-  let agendamentosFiltrados = app.agendamentos;
-
-  if (app.filtroActivo === 'activo') {
-    agendamentosFiltrados = app.agendamentos.filter(function (ag) { return ag.estado === 'activo'; });
-  } else if (app.filtroActivo === 'cancelado') {
-    agendamentosFiltrados = app.agendamentos.filter(function (ag) { return ag.estado === 'cancelado'; });
+  for (let i = 0; i < primeiroDia; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'calendar-day empty';
+    grid.appendChild(empty);
   }
 
-  // Remove cards anteriores (mantém o empty state)
-  lista.querySelectorAll('.agendamento-card').forEach(function (c) { c.remove(); });
+  const hoje = new Date();
 
-  if (agendamentosFiltrados.length === 0) {
+  for (let dia = 1; dia <= diasNoMes; dia++) {
+    const data = new Date(ano, mes, dia);
+
+    const div = document.createElement('div');
+    div.className = 'calendar-day';
+
+    const hojeSemHora = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+    if (data.getTime() < hojeSemHora.getTime()) {
+      div.classList.add('past');
+    }
+
+    const dataStr = `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, '0')}-${String(data.getDate()).padStart(2, '0')}`;
+
+    const agendado = app.agendamentos.some(a =>
+      String(a.data).slice(0, 10) === dataStr
+    );
+
+    if (agendado) {
+      div.classList.add('scheduled');
+    }
+
+    div.textContent = dia;
+
+    div.addEventListener('click', () => {
+      if (div.classList.contains('past') || div.classList.contains('empty')) return;
+
+      document.querySelectorAll('.cal-day--selected')
+        .forEach(el => el.classList.remove('cal-day--selected'));
+
+      div.classList.add('cal-day--selected');
+
+      app.calendario.dataSelecionada = dataStr;
+
+      document.getElementById('timeSelection').style.display = 'block';
+
+      verificarBotao();
+
+      document.getElementById('selectedDateDisplay').textContent = dataStr;
+      document.getElementById('selectedDateDisplay')
+        .classList.remove('booking-value--empty');
+    });
+
+    grid.appendChild(div);
+  }
+}
+
+function verificarBotao() {
+  const ok =
+    app.calendario.dataSelecionada &&
+    app.calendario.horarioSelecionado;
+
+  document.getElementById('btnAgendar').disabled = !ok;
+}
+
+function actualizarPainelConfirmacao() {
+  document.getElementById('bookingUserName').textContent =
+    app.utilizador?.nomeCompleto || '—';
+
+  document.getElementById('bookingNuit').textContent =
+    app.utilizador?.nuit || '—';
+}
+
+function renderizarListaAgendamentos() {
+  const container = document.getElementById('listaAgendamentos');
+  const emptyState = document.getElementById('emptyState');
+
+  if (!container) return;
+
+  let lista = Array.isArray(app.agendamentos) ? app.agendamentos : [];
+
+  if (app.filtroActivo === 'activo') {
+    lista = lista.filter(a => a.estado === 'ativo');
+  }
+
+  if (app.filtroActivo === 'cancelado') {
+    lista = lista.filter(a => a.estado === 'cancelado');
+  }
+
+  container.innerHTML = '';
+
+  if (lista.length === 0) {
     if (emptyState) emptyState.style.display = 'block';
     return;
   }
 
   if (emptyState) emptyState.style.display = 'none';
 
-  // Ordena por data (mais recente primeiro)
-  agendamentosFiltrados.sort(function (a, b) { return b.data.localeCompare(a.data); });
+  lista.forEach(ag => {
 
-  // Cria um card para cada agendamento
-  agendamentosFiltrados.forEach(function (ag) {
-    const partes = ag.data.split('-');
-    const dia    = partes[2];
-    const mesNome = MESES[parseInt(partes[1]) - 1].substring(0, 3).toUpperCase();
+    const div = document.createElement('div');
 
-    const card = document.createElement('div');
-    card.className = 'agendamento-card';
-    card.innerHTML = `
-      <div class="ag-date-block">
-        <span class="ag-date-day">${dia}</span>
-        <span class="ag-date-month">${mesNome}</span>
+    div.className = `agendamento-card ${ag.estado}`;
+
+    div.innerHTML = `
+      <div class="agendamento-info">
+        <h3>${ag.tipo}</h3>
+        <p><strong>Data:</strong> ${ag.data}</p>
+        <p><strong>Hora:</strong> ${ag.hora}</p>
+        <p><strong>NUIT:</strong> ${ag.nuit}</p>
       </div>
-      <div class="ag-info">
-        <div class="ag-title">${ag.tipo}</div>
-        <div class="ag-details">
-          ${formatarDataDisplay(ag.data)} às ${ag.hora} &nbsp;·&nbsp; NUIT: ${ag.nuit}
-        </div>
+      <div class="agendamento-status">
+        <span class="status-badge status-${ag.estado}">
+          ${ag.estado}
+        </span>
       </div>
-      <span class="ag-status ag-status--${ag.estado}">
-        ${ag.estado === 'activo' ? 'Activo' : 'Cancelado'}
-      </span>
-      <button
-        class="ag-cancel-btn"
-        onclick="cancelarAgendamento('${ag.id}')"
-        ${ag.estado !== 'activo' ? 'disabled' : ''}
-      >
-        Cancelar
-      </button>
     `;
 
-    lista.appendChild(card);
+    container.appendChild(div);
   });
 }
 
-// ============================================================
-// PERFIL DO UTILIZADOR
-// ============================================================
-
-/**
- * Preenche os campos da secção de perfil
- */
-function preencherPerfil() {
+function carregarPerfil() {
   if (!app.utilizador) return;
 
-  const u = app.utilizador;
+  document.getElementById('profileNome').textContent =
+    app.utilizador.nomeCompleto || '—';
 
-  const campos = {
-    profileNome:   u.nomeCompleto,
-    profileNuit:   u.nuit,
-    profileDoc:    u.documentoIdentidade,
-    profileData:   formatarDataDisplay(u.dataNascimento),
-    profileTel:    u.telefone,
-    profileEmail:  u.email,
-    profileAvatar: u.nomeCompleto[0].toUpperCase()
-  };
+  document.getElementById('profileNuit').textContent =
+    app.utilizador.nuit || '—';
 
-  Object.keys(campos).forEach(function (id) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = campos[id];
-  });
+  document.getElementById('profileDoc').textContent =
+    app.utilizador.identif || '—';
+
+  document.getElementById('profileData').textContent =
+    app.utilizador.dataNascimento || '—';
+
+  document.getElementById('profileTel').textContent =
+    app.utilizador.nrTelefone || '—';
+
+  document.getElementById('profileEmail').textContent =
+    app.utilizador.email || '—';
+
+  const nome = app.utilizador.nomeCompleto || 'U';
+  document.getElementById('profileAvatar').textContent =
+    nome.charAt(0).toUpperCase();
 }
 
-// RESUMO DA SIDEBAR
-
-
-function actualizarResumo() {
-  const totalEl    = document.getElementById('totalAgendamentos');
-  const proximoEl  = document.getElementById('proximoAgendamento');
-
-  const activos = app.agendamentos.filter(function (ag) { return ag.estado === 'activo'; });
-
-  if (totalEl) totalEl.textContent = activos.length;
-
-  if (proximoEl) {
-    if (activos.length === 0) {
-      proximoEl.textContent = '—';
-    } else {
-      // Encontra o proximo agendamento (data mais próxima no futuro)
-      const hoje = new Date();
-      const futuros = activos.filter(function (ag) { return new Date(ag.data) >= hoje; });
-      futuros.sort(function (a, b) { return a.data.localeCompare(b.data); });
-
-      if (futuros.length > 0) {
-        const partes = futuros[0].data.split('-');
-        proximoEl.textContent = partes[2] + '/' + partes[1];
-      } else {
-        proximoEl.textContent = '—';
-      }
-    }
-  }
-}
-
-
-// PERSISTENCIA — SessionStorage
-
-
-function guardarAgendamentos() {
-  sessionStorage.setItem('agendamentosIRPS', JSON.stringify(app.agendamentos));
-}
-
-function carregarAgendamentos() {
-  const dados = sessionStorage.getItem('agendamentosIRPS');
-  if (dados) {
-    app.agendamentos = JSON.parse(dados);
-  }
-}
-
-
-// UTILITARIOS
-
-
-/** Formata data 'YYYY-MM-DD' para 'DD de Mes de AAAA' */
-function formatarDataDisplay(dataStr) {
-  if (!dataStr) return '—';
-  const partes = dataStr.split('-');
-  if (partes.length < 3) return dataStr;
-  return partes[2] + ' de ' + MESES[parseInt(partes[1]) - 1] + ' de ' + partes[0];
-}
-
-/** Formata Date para string 'YYYY-MM-DD' */
-function formatarData(data) {
-  return data.getFullYear() + '-' + padZero(data.getMonth() + 1) + '-' + padZero(data.getDate());
-}
-
-/** Adiciona zero a esquerda (ex: 5 → '05') */
-function padZero(num) {
-  return String(num).padStart(2, '0');
-}
+window.confirmarAgendamento = confirmarAgendamento;
+window.carregarAgendamentos = carregarAgendamentos;
+window.resetSelecao = resetSelecao;
