@@ -45,6 +45,25 @@ class ClienteController {
             data: id
         })
     }
+
+    whoAmI = async (req, res) => {
+
+        const { email } = req.params;
+
+        const user = await clienteModel.findOne({ email });
+
+        if(!user){ 
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const id = user._id;
+
+        res.status(200).json({
+            userId: id
+        });
+    }
 }
 
 export default ClienteController;

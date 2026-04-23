@@ -10,12 +10,9 @@
 </head>
 <body>
 
-  <!--NAVBAR COM INFO DO UTILIZADOR-->
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="logo-emblem">
-        <!-- Icoon -->
-      </div>
+      <div class="logo-emblem"></div>
       <div class="logo-text">
         <span class="logo-title">AT</span>
         <span class="logo-subtitle">Autoridade Tributária de Moçambique</span>
@@ -25,33 +22,26 @@
       <span class="navbar-username" id="navbarUsername">Utilizador</span>
       <div class="navbar-avatar" id="navbarAvatar">U</div>
       <a href="index.html" class="btn-sair" title="Sair do sistema">
-        <!-- Icon -->
         Sair
       </a>
     </div>
   </nav>
 
-  <!--CONTEUDO PRINCIPAL-->
   <main class="main-layout">
 
-    <!-- Sidebar -->
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <a href="#" class="sidebar-link sidebar-link--active" data-section="calendario">
-          <!-- Icon -->
           Agendar Pagamento
         </a>
         <a href="#" class="sidebar-link" data-section="agendamentos">
-          <!-- Icon -->
           Meus Agendamentos
         </a>
         <a href="#" class="sidebar-link" data-section="perfil">
-          <!-- Icon -->
           Meu Perfil
         </a>
       </nav>
 
-      <!-- Resumo rapido -->
       <div class="sidebar-summary">
         <h4>Resumo</h4>
         <div class="summary-item">
@@ -65,10 +55,8 @@
       </div>
     </aside>
 
-    <!-- conteudo principal -->
     <div class="content-area">
 
-      <!-- ===== SECÇÃO: CALENDÁRIO / AGENDAMENTO ===== -->
       <section id="section-calendario" class="content-section content-section--active">
         <div class="section-header">
           <div>
@@ -78,27 +66,20 @@
         </div>
 
         <div class="calendar-layout">
-          <!-- Calendário visual -->
           <div class="calendar-card">
             <div class="calendar-nav">
-              <button class="cal-nav-btn" id="prevMonth" title="Mês anterior">
-                <!-- Icon -->
-              </button>
+              <button class="cal-nav-btn" id="prevMonth" title="Mês anterior"></button>
               <h3 id="calMonthYear">Junho 2025</h3>
-              <button class="cal-nav-btn" id="nextMonth" title="Próximo mês">
-                <!-- Icon -->
-                </svg>
-              </button>
+              <button class="cal-nav-btn" id="nextMonth" title="Próximo mês"></button>
             </div>
-            <!-- Cabeçalho dos dias da semana -->
+
             <div class="calendar-weekdays">
               <span>Dom</span><span>Seg</span><span>Ter</span>
               <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
             </div>
-            <!-- Grelha dos dias - preenchida via JS -->
+
             <div class="calendar-grid" id="calendarGrid"></div>
 
-            <!-- Legenda -->
             <div class="calendar-legend">
               <span class="legend-item"><span class="legend-dot legend-dot--available"></span>Disponível</span>
               <span class="legend-item"><span class="legend-dot legend-dot--selected"></span>Selecionado</span>
@@ -107,7 +88,6 @@
             </div>
           </div>
 
-          <!-- Painel de confirmacao do agendamento -->
           <div class="booking-panel">
             <h3>Confirmação</h3>
 
@@ -130,7 +110,6 @@
               </div>
             </div>
 
-            <!-- Selecao de horario -->
             <div class="time-selection" id="timeSelection" style="display:none">
               <label>Selecione o Horário</label>
               <div class="time-slots">
@@ -151,7 +130,6 @@
         </div>
       </section>
 
-      <!-- LISTA DE AGENDAMENTOS -->
       <section id="section-agendamentos" class="content-section">
         <div class="section-header">
           <div>
@@ -160,25 +138,20 @@
           </div>
         </div>
 
-        <!-- Filtros -->
         <div class="filter-bar">
           <button class="filter-btn filter-btn--active" data-filter="todos">Todos</button>
           <button class="filter-btn" data-filter="activo">Activos</button>
           <button class="filter-btn" data-filter="cancelado">Cancelados</button>
         </div>
 
-        <!-- Lista de agendamentos (preenchida via JS) -->
-        <div id="listaAgendamentos" class="agendamentos-list">
-          <!-- Estado vazio -->
-          <div class="empty-state" id="emptyState">
-            <!-- Icon -->
-            <p>Nenhum agendamento encontrado.</p>
-            <a href="#" class="btn btn-outline btn-sm" onclick="showSection('calendario')">Fazer Agendamento</a>
-          </div>
+        <div id="listaAgendamentos" class="agendamentos-list"></div>
+
+        <div class="empty-state" id="emptyState">
+          <p>Nenhum agendamento encontrado.</p>
+          <a href="#" class="btn btn-outline btn-sm" onclick="showSection('calendario')">Fazer Agendamento</a>
         </div>
       </section>
 
-      <!--PERFIL-->
       <section id="section-perfil" class="content-section">
         <div class="section-header">
           <div>
@@ -204,10 +177,9 @@
         </div>
       </section>
 
-    </div><!-- fim content-area -->
+    </div>
   </main>
 
-  <!-- ===== POPUP REUTILIZAVEL ===== -->
   <div id="popup-overlay" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="popup-box" id="popup-box">
       <div class="popup-icon" id="popup-icon"></div>

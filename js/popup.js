@@ -1,15 +1,3 @@
-/**
- * popup.js — Componente de Pop-up Reutilizável
- *
- * Como usar em qualquer página:
- *   showPopup('success', 'Título', 'Mensagem aqui');
- *   showPopup('error', 'Erro', 'Algo correu mal.');
- *   showPopup('warning', 'Atenção', 'Verifique os dados.');
- *
- * Tipos disponíveis: 'success', 'error', 'warning'
- */
-
-// Ícones SVG para cada tipo de popup
 const POPUP_ICONS = {
   success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
                <path d="M20 6L9 17l-5-5"/>
@@ -40,28 +28,22 @@ function showPopup(tipo, titulo, mensagem, callbackAoFechar, autoFecharMs) {
   const tituloEl = document.getElementById('popup-title');
   const msgEl    = document.getElementById('popup-message');
 
-  // Verifica se os elementos existem
   if (!overlay || !iconeEl || !tituloEl || !msgEl) {
     console.warn('popup.js: Elementos do popup não encontrados no DOM.');
     return;
   }
 
-  // Preenche o conteudo
   iconeEl.innerHTML = POPUP_ICONS[tipo] || POPUP_ICONS.warning;
   iconeEl.className = 'popup-icon popup-icon--' + tipo;
   tituloEl.textContent = titulo;
   msgEl.textContent = mensagem;
 
-  // Guarda o callback para usar ao fechar
   overlay._callbackAoFechar = callbackAoFechar || null;
 
-  // Acessibilidade: define como visivel para leitores de ecra
   overlay.setAttribute('aria-hidden', 'false');
 
-  // Activa o popup (animação CSS)
   overlay.classList.add('popup-active');
 
-  // Fecha automaticamente se um tempo foi definido
   if (autoFecharMs && typeof autoFecharMs === 'number') {
     setTimeout(function () {
       closePopup();
@@ -69,32 +51,27 @@ function showPopup(tipo, titulo, mensagem, callbackAoFechar, autoFecharMs) {
   }
 }
 
-/**
- * Fecha o popup e executa o callback (se existir)
- */
 function closePopup() {
   const overlay = document.getElementById('popup-overlay');
   if (!overlay) return;
 
-  // Remove a classe que activa o popup
   overlay.classList.remove('popup-active');
   overlay.setAttribute('aria-hidden', 'true');
 
-  // Executa callback após a animação de saída terminar
+
   setTimeout(function () {
     if (overlay._callbackAoFechar && typeof overlay._callbackAoFechar === 'function') {
       overlay._callbackAoFechar();
       overlay._callbackAoFechar = null;
     }
-  }, 280); // tempo ligeiramente maior que a transição CSS (0.25s)
+  }, 280);
 }
 
-// Fecha o popup ao clicar fora da caixa (no overlay)
+
 document.addEventListener('DOMContentLoaded', function () {
   const overlay = document.getElementById('popup-overlay');
   if (overlay) {
     overlay.addEventListener('click', function (e) {
-      // Só fecha se clicar directamente no overlay, não na caixa
       if (e.target === overlay) {
         closePopup();
       }
@@ -102,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Fecha o popup com a tecla Escape
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
     closePopup();

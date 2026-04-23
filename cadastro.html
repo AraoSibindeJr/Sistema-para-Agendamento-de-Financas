@@ -10,11 +10,9 @@
 </head>
 <body>
 
-  <!--NAVBAR-->
   <nav class="navbar">
     <div class="navbar-brand">
       <div class="logo-emblem">
-        <!-- Nao esquece de colocar logo djon -->
       </div>
       <div class="logo-text">
         <span class="logo-title">AT</span>
@@ -26,10 +24,8 @@
     </div>
   </nav>
 
-  <!--CORPO DA PAGINA-->
   <main class="cadastro-main">
 
-    <!--Barra de progresso / etapas-->
     <div class="steps-bar">
       <div class="steps-inner">
         <div class="step step--active">
@@ -58,7 +54,6 @@
 
       <form id="cadastroForm" class="cadastro-form" novalidate onsubmit="handleFormSubmit(event)">
 
-        <!-- Nome completo -->
         <div class="form-row">
           <div class="form-group">
             <label for="nomeCompleto">Nome Completo <span class="required">*</span></label>
@@ -69,12 +64,10 @@
               placeholder="Ex: Benjamim Junior Mangave"
               autocomplete="name"
             />
-            <!-- Mensagem de erro (JS) -->
             <span class="form-error" id="err-nomeCompleto"></span>
           </div>
         </div>
 
-        <!-- NUIT + BI -->
         <div class="form-row form-row--two">
           <div class="form-group">
             <label for="nuit">NUIT <span class="required">*</span></label>
@@ -99,7 +92,6 @@
           </div>
         </div>
 
-        <!-- Data nascimento + Telefone -->
         <div class="form-row form-row--two">
           <div class="form-group">
             <label for="dataNascimento">Data de Nascimento <span class="required">*</span></label>
@@ -123,7 +115,6 @@
           </div>
         </div>
 
-        <!-- Email -->
         <div class="form-row">
           <div class="form-group">
             <label for="email">Endereço de Email <span class="required">*</span></label>
@@ -141,7 +132,6 @@
 
         <p class="required-note"><span class="required">*</span> Campos obrigatórios</p>
 
-        <!-- Botao de submissao -->
         <div class="form-actions">
           <a href="index.html" class="btn btn-outline">Cancelar</a>
           <button type="submit" class="btn btn-primary" id="btnSubmit">
@@ -163,7 +153,6 @@
 
   </main>
 
-  <!--POPUP (reutilizavel)-->
   <div id="popup-overlay" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="popup-box" id="popup-box">
       <div class="popup-icon" id="popup-icon"></div>
@@ -190,7 +179,7 @@
       console.log("data: ", userData)
 
       try {
-        const res = await fetch("http://localhost:8080/api/v1/criar", {
+        const res = await fetch("http://localhost:8080/api/v1/cliente/cadastrar", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -201,7 +190,9 @@
         const data = await res.json();
         console.log("Resposta:", data);
 
-        window.location.href = ""
+        sessionStorage.setItem('utilizadorIRPS', JSON.stringify(userData));
+        sessionStorage.setItem('userId', data._id)
+        window.location.href = "/main.html"
 
       } catch (error) {
         console.log('Erro: ', error);

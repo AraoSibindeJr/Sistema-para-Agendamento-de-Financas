@@ -8,7 +8,7 @@ class AgendamentoController {
 
         const newAgendamento = new agendamentoModel({
             userId,
-            dataAg,
+            dataAgendamento: dataAg,
             horarioAgendamento,
             status: "ativo"
         });
@@ -23,6 +23,7 @@ class AgendamentoController {
             data: newAgendamento
         });
     }
+
     cancelarAgendamento = async (req, res) => {
         const { id } = req.body;
 
@@ -43,7 +44,7 @@ class AgendamentoController {
 
     listaPorUserId = async (req, res) => {
 
-        const { userId } = req.body;
+        const { userId } = req.params;
 
         const agendamentos = await agendamentoModel.find({ userId });
 
@@ -54,7 +55,7 @@ class AgendamentoController {
     }
 
     listarAgendamentos = async (req, res) => {
-        const { identif } = req.body
+        const { identif } = req.params;
 
         const agendamentos = await agendamentoModel.find({ identif});
 
