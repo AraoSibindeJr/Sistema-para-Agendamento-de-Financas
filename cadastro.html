@@ -56,7 +56,7 @@
         <p>Preencha os seus dados para aceder ao sistema de agendamento de IRPS</p>
       </div>
 
-      <form id="cadastroForm" class="cadastro-form" novalidate>
+      <form id="cadastroForm" class="cadastro-form" novalidate onsubmit="handleFormSubmit(event)">
 
         <!-- Nome completo -->
         <div class="form-row">
@@ -173,7 +173,42 @@
     </div>
   </div>
 
+  <script>
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const userData = {
+        nomeCompleto: document.getElementById('nomeCompleto').value,
+        email: document.getElementById('email').value,
+        identif: document.getElementById('documentoIdentidade').value,
+        nuit: document.getElementById('nuit').value,
+        nrTelefone: document.getElementById('telefone').value,
+        dataNascimento: document.getElementById('dataNascimento').value,
+
+      }
+
+      console.log("data: ", userData)
+
+      try {
+        const res = await fetch("http://localhost:8080/api/v1/criar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(userData)
+        })
+
+        const data = await res.json();
+        console.log("Resposta:", data);
+
+        window.location.href = ""
+
+      } catch (error) {
+        console.log('Erro: ', error);
+      }
+    }
+  </script>
+
   <script src="js/popup.js"></script>
-  <script src="js/cadastro.js"></script>
 </body>
 </html>

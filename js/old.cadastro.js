@@ -4,10 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const form      = document.getElementById('cadastroForm');
   const btnSubmit = document.getElementById('btnSubmit');
 
-  if (!form) return; // seguranca: sai se o formulario nao existir
-
-  // REGRAS DE VALIDACAO
-  // Cada campo tem: campo, funcao validadora, mensagem de erro
+  if (!form) return;
   const regrasValidacao = [
     {
       id: 'nomeCompleto',
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!val) return false;
         const nascimento = new Date(val);
         const hoje = new Date();
-        // Deve ser maior de 18 anos
         const idade = hoje.getFullYear() - nascimento.getFullYear();
         return idade >= 18;
       },
@@ -39,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       id: 'telefone',
       validar: function (val) {
-        // Aceita formatos com ou sem prefixo +258
         const telLimpo = val.replace(/[\s\-\(\)]/g, '');
         return /^(\+258|258)?8[234567]\d{7}$/.test(telLimpo);
       },
@@ -54,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   ];
 
-  // VALIDACAO EM TEMPO REAL (ao sair do campo)
+
   regrasValidacao.forEach(function (regra) {
     const input = document.getElementById(regra.id);
     if (!input) return;
@@ -72,13 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // SUBMISSAO DO FORM
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); // impede o reload da pagina
-
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault(); 
     let formularioValido = true;
 
-    // Valida todos os campos
     regrasValidacao.forEach(function (regra) {
       const input = document.getElementById(regra.id);
       if (!input) return;
@@ -90,13 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (!formularioValido) {
-      // Mostra popup de erro
       showPopup('error', 'Dados Inválidos', 'Por favor, corrija os campos assinalados antes de continuar.');
       return;
     }
 
-    // GUARDA DADOS NO SESSIONSTORAGE
-    // SessionStorage: dados guardados durante a sessao do browser
     const dadosUtilizador = {
       nomeCompleto:        document.getElementById('nomeCompleto').value.trim(),
       nuit:                document.getElementById('nuit').value.trim(),
@@ -106,7 +95,30 @@ document.addEventListener('DOMContentLoaded', function () {
       email:               document.getElementById('email').value.trim()
     };
 
-    sessionStorage.setItem('utilizadorIRPS', JSON.stringify(dadosUtilizador));
+    console.log(dadosUtilizador)
+
+    try {
+      const res = await fetch("http://localhost:8080/api/v1/agendamentos/criar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nomeCompleto: dadosUtilizador.nomeCompleto,
+          nuit: dadosUtilizador.nuit,
+          identif: dadosUtilizador.documentoIdentidade,
+          email: dadosUtilizador.email,
+          nrTelefone: dadosUtilizador.telefone,
+        })
+      });
+    } catch (e) {
+      console.log(e)
+    } finally {
+      console.log(res)
+    }
+    /*
+      sessionStorage.setItem('utilizadorIRPS', JSON.stringify(dadosUtilizador));
+    */
 
     // Mostra popup de sucesso e redireciona para o painel principal
     showPopup(

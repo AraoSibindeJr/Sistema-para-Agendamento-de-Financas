@@ -31,8 +31,11 @@ class AgendamentoController {
             status: "ativo"
         });
 
+        console.log(newAgendamento)
+
         await newAgendamento.save().then(() => console.log("Agendamento marcado com sucesso!"));
 
+        console.log(res.body)
         res.status(201).json({
             message: "Agendamento concluido!",
             data: newAgendamento 
