@@ -1,31 +1,13 @@
-import { agendamentoModel } from "../models/agendamendo.model.js";
-
+import { agendamentoModel } from "../models/agendamento.model.js";
 
 
 class AgendamentoController {
 
-
     criarAgendamento = async (req, res) => {
-
-        const { 
-            nomeCompleto,
-            nuit,
-            identif,
-            dataNascimento,
-            nrTelefone,
-            email,
-            dataAg,
-            horarioAgendamento
-        } = req.body;
-
+        const { userId, dataAg, horarioAgendamento } = req.body;
 
         const newAgendamento = new agendamentoModel({
-            nomeCompleto,
-            nuit,
-            identif,
-            dataNascimento,
-            nrTelefone,
-            email,
+            userId,
             dataAg,
             horarioAgendamento,
             status: "ativo"
@@ -37,12 +19,10 @@ class AgendamentoController {
 
         console.log(res.body)
         res.status(201).json({
-            message: "Agendamento concluido!",
-            data: newAgendamento 
+            message: "Agendamento criado com sucesso!",
+            data: newAgendamento
         });
-
     }
-
     cancelarAgendamento = async (req, res) => {
         const { id } = req.body;
 
@@ -58,6 +38,18 @@ class AgendamentoController {
 
         return res.status(200).json({
             message: "Agendamento cancelado com sucesso!"
+        });
+    }
+
+    listaPorUserId = async (req, res) => {
+
+        const { userId } = req.body;
+
+        const agendamentos = await agendamentoModel.find({ userId });
+
+        res.status(200).json({
+            message: `Agendamentos do user: ${userId}`,
+            data: agendamentos
         });
     }
 
@@ -87,4 +79,4 @@ class AgendamentoController {
     }
 }
 
-export default AgendamentoController;
+export {AgendamentoController};
