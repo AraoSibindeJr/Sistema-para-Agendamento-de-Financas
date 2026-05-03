@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrar - IRPS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/login.css"/>
+</head>
+<body>
+
+  <!--NAVBAR-->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="logo-emblem">
+        <!-- Logo AT -->
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">AT</span>
+        <span class="logo-subtitle">Autoridade Tributária de Moçambique</span>
+      </div>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Inicio</a>
+    </div>
+  </nav>
+
+  <!--CORPO DA PAGINA-->
+  <main class="login-main">
+
+    <div class="form-card fade-in-up">
+
+      <!-- Cabeçalho do card -->
+      <div class="form-card-header">
+        <div class="login-header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <h2>Aceder ao Sistema</h2>
+        <p>Introduza o seu NUIT e email para entrar no sistema de agendamento de IRPS</p>
+      </div>
+
+      <form id="loginForm" class="login-form" novalidate>
+
+        <!-- NUIT -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nuit">NUIT <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nuit"
+              name="nuit"
+              placeholder="9 dígitos"
+              maxlength="9"
+              autocomplete="username"
+            />
+            <span class="form-error" id="err-nuit"></span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Endereço de Email <span class="required">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Ex: benjamim.junior@email.com"
+              autocomplete="email"
+            />
+            <span class="form-error" id="err-email"></span>
+          </div>
+        </div>
+
+        <!-- Opções extras -->
+        <div class="login-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="lembrarMe" name="lembrarMe"/>
+            <span class="checkbox-custom"></span>
+            <span>Lembrar-me</span>
+          </label>
+          <a href="#" class="link-esqueci">Esqueci o meu acesso</a>
+        </div>
+
+        <p class="required-note"><span class="required">*</span> Campos obrigatórios</p>
+
+        <!-- Botões -->
+        <div class="form-actions">
+          <a href="cadastro.html" class="btn btn-outline">Criar Conta</a>
+          <button type="submit" class="btn btn-primary" id="btnLogin">
+            Entrar
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Divisor -->
+      <div class="login-divider">
+        <span>Não tem conta?</span>
+      </div>
+
+      <!-- Link de registo -->
+      <div class="login-register">
+        <p>Registe-se para agendar a entrega da sua declaração de IRPS.</p>
+        <a href="cadastro.html" class="btn btn-outline btn--full">Criar Nova Conta</a>
+      </div>
+
+    </div>
+
+    <!-- Nota de segurança -->
+    <div class="security-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span>Os seus dados são protegidos e utilizados exclusivamente para fins fiscais pela AT Moçambique.</span>
+    </div>
+
+  </main>
+
+  <!-- POPUP (reutilizavel) -->
+  <div id="popup-overlay" class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="popup-box" id="popup-box">
+      <div class="popup-icon" id="popup-icon"></div>
+      <h3 class="popup-title" id="popup-title"></h3>
+      <p class="popup-message" id="popup-message"></p>
+      <button class="btn btn-primary popup-btn" id="popup-close-btn" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
+  <script src="js/popup.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
