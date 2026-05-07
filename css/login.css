@@ -261,7 +261,7 @@ body {
   gap: 8px;
   margin-top: 20px;
   color: var(--cinza-label);
-  font-size: 0.78rem;
+  font-size: 0.64rem;
 }
 
 .security-note svg {
