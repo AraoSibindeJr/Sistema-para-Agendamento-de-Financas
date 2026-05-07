@@ -1,0 +1,308 @@
+/* ============================================
+   LOGIN.CSS — Estilos da página de login
+   Complementa style.css (variáveis globais,
+   navbar, botões, popup já definidos lá)
+   ============================================ */
+
+body {
+  background-color: var(--cinza-fundo);
+}
+
+/* ÁREA PRINCIPAL */
+.login-main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 48px 24px 48px;
+}
+
+/* CARD */
+.form-card {
+  background: var(--branco);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--azul-borda);
+  box-shadow: var(--sombra-card);
+  overflow: hidden;
+}
+
+/* CABEÇALHO DO CARD */
+.form-card-header {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, #2E5FA8 100%);
+  padding: 32px 32px 28px;
+  color: var(--branco);
+  text-align: center;
+}
+
+.login-header-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  backdrop-filter: blur(4px);
+}
+
+.form-card-header h2 {
+  color: var(--branco);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.form-card-header p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* FORMULÁRIO */
+.login-form {
+  padding: 28px 32px 24px;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--preto-titulo);
+}
+
+.required {
+  color: var(--vermelho);
+}
+
+/* Inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  padding: 10px 14px;
+  border: 1.5px solid var(--azul-borda);
+  border-radius: var(--radius-md);
+  font-family: var(--fonte-corpo);
+  font-size: 0.9rem;
+  color: var(--preto-titulo);
+  background: var(--branco);
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+  outline: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+  border-color: var(--azul-medio);
+  box-shadow: 0 0 0 3px rgba(46, 109, 180, 0.15);
+}
+
+.form-group input.input-error {
+  border-color: var(--vermelho);
+  box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.1);
+}
+
+.form-group input.input-success {
+  border-color: var(--verde);
+}
+
+.form-group input::placeholder {
+  color: #A0AEC0;
+  font-size: 0.875rem;
+}
+
+/* Mensagem de erro inline */
+.form-error {
+  font-size: 0.78rem;
+  color: var(--vermelho);
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.form-error:not(:empty) {
+  display: flex;
+}
+
+/* OPÇÕES (lembrar-me + esqueci) */
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: -4px;
+}
+
+/* Checkbox personalizado */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.84rem;
+  color: var(--cinza-texto);
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--azul-borda);
+  border-radius: 4px;
+  background: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transicao), border-color var(--transicao);
+  flex-shrink: 0;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background: var(--azul-escuro);
+  border-color: var(--azul-escuro);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 8px;
+  border: 2px solid var(--branco);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.link-esqueci {
+  font-size: 0.82rem;
+  color: var(--azul-medio);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transicao);
+}
+
+.link-esqueci:hover {
+  color: var(--azul-escuro);
+  text-decoration: underline;
+}
+
+/* Nota de campos obrigatórios */
+.required-note {
+  font-size: 0.78rem;
+  color: var(--cinza-label);
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+/* ACÇÕES DO FORM */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--azul-borda);
+}
+
+/* DIVISOR */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 32px;
+  margin: 4px 0;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--azul-borda);
+}
+
+.login-divider span {
+  font-size: 0.78rem;
+  color: var(--cinza-label);
+  white-space: nowrap;
+}
+
+/* BLOCO DE REGISTO */
+.login-register {
+  padding: 20px 32px 28px;
+  text-align: center;
+}
+
+.login-register p {
+  font-size: 0.84rem;
+  color: var(--cinza-texto);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.btn--full {
+  width: 100%;
+  justify-content: center;
+}
+
+/* NOTA DE SEGURANÇA */
+.security-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  color: var(--cinza-label);
+  font-size: 0.78rem;
+}
+
+.security-note svg {
+  color: var(--verde);
+  flex-shrink: 0;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 520px) {
+  .login-main {
+    padding: 24px 16px 40px;
+  }
+
+  .login-form {
+    padding: 20px 20px 16px;
+  }
+
+  .form-card-header {
+    padding: 24px 20px 20px;
+  }
+
+  .login-register {
+    padding: 16px 20px 24px;
+  }
+
+  .login-divider {
+    padding: 0 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .login-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
