@@ -1,15 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  const form     = document.getElementById('loginForm');
+  const form = document.getElementById('loginForm');
   const btnLogin = document.getElementById('btnLogin');
 
-  if (!form) return; // segurança: sai se o formulário não existir
+  if (!form) return;
 
   // REGRAS DE VALIDAÇÃO
   const regrasValidacao = [
     {
       id: 'nuit',
-      validar: function (val) { return /^\d{9}$/.test(val.trim()); },
+      validar: function (val) {
+        return /^\d{9}$/.test(val.trim());
+      },
       erro: 'O NUIT deve ter exactamente 9 dígitos.'
     },
     {
@@ -21,9 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   ];
 
-  // VALIDAÇÃO EM TEMPO REAL (ao sair do campo)
+  // VALIDAÇÃO EM TEMPO REAL
   regrasValidacao.forEach(function (regra) {
+
     const input = document.getElementById(regra.id);
+
     if (!input) return;
 
     input.addEventListener('blur', function () {
@@ -31,138 +35,219 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     input.addEventListener('input', function () {
+
       if (input.classList.contains('input-error')) {
         limparErroCampo(regra.id, input);
       }
+
     });
+
   });
 
   // SUBMISSÃO DO FORMULÁRIO
   form.addEventListener('submit', function (e) {
+
     e.preventDefault();
 
     let formularioValido = true;
 
+    // VALIDAR CAMPOS
     regrasValidacao.forEach(function (regra) {
+
       const input = document.getElementById(regra.id);
+
       if (!input) return;
 
       const campoValido = validarCampo(regra, input.value);
+
       if (!campoValido) {
         formularioValido = false;
       }
+
     });
 
+    // BLOQUEIA ENVIO SE HOUVER ERROS
     if (!formularioValido) {
-      showPopup('error', 'Dados Inválidos', 'Por favor, corrija os campos assinalados antes de continuar.');
+
+      showPopup(
+        'error',
+        'Dados Inválidos',
+        'Por favor, corrija os campos assinalados antes de continuar.'
+      );
+
       return;
     }
 
-    // VERIFICAÇÃO CONTRA DADOS GUARDADOS (SessionStorage)
-    const nuitIntroduzido  = document.getElementById('nuit').value.trim();
-    const emailIntroduzido = document.getElementById('email').value.trim().toLowerCase();
-    const lembrarMe        = document.getElementById('lembrarMe').checked;
+    // DADOS DO FORMULÁRIO
+    const nuitIntroduzido = document.getElementById('nuit').value.trim();
 
-    const dadosGuardados = sessionStorage.getItem('utilizadorIRPS');
+    const emailIntroduzido = document
+      .getElementById('email')
+      .value
+      .trim()
+      .toLowerCase();
 
-    if (dadosGuardados) {
-      const utilizador = JSON.parse(dadosGuardados);
+    const lembrarMe = document.getElementById('lembrarMe').checked;
 
-      const nuitCorreto  = utilizador.nuit  === nuitIntroduzido;
-      const emailCorreto = utilizador.email.toLowerCase() === emailIntroduzido;
+    // ESTADO DO BOTÃO
+    btnLogin.textContent = 'A entrar...';
+    btnLogin.disabled = true;
 
-      if (!nuitCorreto || !emailCorreto) {
-        showPopup('error', 'Acesso Negado', 'O NUIT ou o email introduzido não corresponde ao registo. Verifique os dados e tente novamente.');
-        return;
+    // PEDIDO PARA O BACKEND
+    fetch('http://localhost:8080/api/v1/cliente/login', {
+
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        nuit: nuitIntroduzido,
+        email: emailIntroduzido
+      })
+
+    })
+
+    .then(function (response) {
+
+      if (!response.ok) {
+        throw new Error('NUIT ou email inválido.');
       }
 
-      // Guarda preferência "Lembrar-me"
+      return response.json();
+
+    })
+
+    .then(function (data) {
+
+      // GUARDAR LOGIN SE "LEMBRAR-ME" ESTIVER ACTIVO
       if (lembrarMe) {
-        localStorage.setItem('loginGuardado', JSON.stringify({ nuit: nuitIntroduzido, email: emailIntroduzido }));
+
+        localStorage.setItem(
+          'loginGuardado',
+          JSON.stringify({
+            nuit: nuitIntroduzido,
+            email: emailIntroduzido
+          })
+        );
+
       } else {
+
         localStorage.removeItem('loginGuardado');
+
       }
 
-      // Sucesso — redireciona para o painel
-      btnLogin.textContent = 'A entrar...';
-      btnLogin.disabled = true;
-
+      // SUCESSO
       showPopup(
         'success',
         'Acesso Concedido',
-        'Bem-vindo ao sistema de agendamento de IRPS. A redirecionar...',
+        'Login efectuado com sucesso.',
         function () {
           window.location.href = 'main.html';
         },
         2000
       );
 
-    } else {
-      // Nenhum registo encontrado na sessão
+    })
+
+    .catch(function (error) {
+
       showPopup(
         'error',
-        'Conta não encontrada',
-        'Não encontrámos nenhuma conta com estes dados. Por favor, registe-se primeiro.',
-        function () {
-          window.location.href = 'cadastro.html';
-        },
-        3000
+        'Erro de Login',
+        error.message
       );
-    }
+
+    })
+
+    .finally(function () {
+
+      btnLogin.textContent = 'Entrar';
+      btnLogin.disabled = false;
+
+    });
+
   });
 
-
-  // PRÉ-PREENCHER COM DADOS "LEMBRAR-ME"
+  // PRÉ-PREENCHER "LEMBRAR-ME"
   const loginGuardado = localStorage.getItem('loginGuardado');
+
   if (loginGuardado) {
+
     try {
+
       const dados = JSON.parse(loginGuardado);
-      const inputNuit  = document.getElementById('nuit');
+
+      const inputNuit = document.getElementById('nuit');
       const inputEmail = document.getElementById('email');
       const checkLembrar = document.getElementById('lembrarMe');
 
-      if (inputNuit  && dados.nuit)  inputNuit.value  = dados.nuit;
-      if (inputEmail && dados.email) inputEmail.value = dados.email;
-      if (checkLembrar) checkLembrar.checked = true;
+      if (inputNuit && dados.nuit) {
+        inputNuit.value = dados.nuit;
+      }
+
+      if (inputEmail && dados.email) {
+        inputEmail.value = dados.email;
+      }
+
+      if (checkLembrar) {
+        checkLembrar.checked = true;
+      }
+
     } catch (err) {
-      // JSON inválido — ignora
+
       localStorage.removeItem('loginGuardado');
+
     }
+
   }
 
-
-  // AUXILIARES
-
-  /**
-   * Valida um campo individual e mostra/esconde a mensagem de erro.
-   * @param {object} regra - { id, validar, erro }
-   * @param {string} valor - Valor actual do campo
-   * @returns {boolean}
-   */
+  // FUNÇÃO DE VALIDAÇÃO
   function validarCampo(regra, valor) {
-    const input   = document.getElementById(regra.id);
+
+    const input = document.getElementById(regra.id);
+
     const errSpan = document.getElementById('err-' + regra.id);
-    const valido  = regra.validar(valor);
+
+    const valido = regra.validar(valor);
 
     if (!input) return true;
 
     if (!valido) {
+
       input.classList.add('input-error');
       input.classList.remove('input-success');
-      if (errSpan) errSpan.textContent = regra.erro;
+
+      if (errSpan) {
+        errSpan.textContent = regra.erro;
+      }
+
     } else {
+
       input.classList.remove('input-error');
       input.classList.add('input-success');
-      if (errSpan) errSpan.textContent = '';
+
+      if (errSpan) {
+        errSpan.textContent = '';
+      }
+
     }
 
     return valido;
   }
 
+  // LIMPA ERRO VISUAL
   function limparErroCampo(id, input) {
+
     const errSpan = document.getElementById('err-' + id);
+
     input.classList.remove('input-error');
-    if (errSpan) errSpan.textContent = '';
+
+    if (errSpan) {
+      errSpan.textContent = '';
+    }
+
   }
 
 });
