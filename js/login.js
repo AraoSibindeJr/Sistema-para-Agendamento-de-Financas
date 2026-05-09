@@ -1,3 +1,4 @@
+/*
 document.addEventListener('DOMContentLoaded', function () {
 
   const form     = document.getElementById('loginForm');
@@ -139,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
    * @param {string} valor - Valor actual do campo
    * @returns {boolean}
    */
+  /*
   function validarCampo(regra, valor) {
     const input   = document.getElementById(regra.id);
     const errSpan = document.getElementById('err-' + regra.id);
@@ -166,3 +168,5 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+*/

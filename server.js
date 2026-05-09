@@ -14,15 +14,10 @@ app.use("/api/v1/agendamentos", agendamentoRouter);
 app.use("/api/v1/cliente", clienteRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-<<<<<<< HEAD
   console.log(`Servidor a correr na porta ${PORT}`);
 });
-=======
-  console.log(`🚀 Servidor a correr na porta ${PORT}`);
-});
-
 // ==== AUTH ADDED ====
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 const SECRET = 'secret123';
 
 let users = []; // simple in-memory (replace with DB)
@@ -58,5 +53,3 @@ function auth(req, res, next){
     res.sendStatus(403);
   }
 }
-// ==== END AUTH ====
->>>>>>> 59a3c90a916e21fb9bd502b8d05e4830457fb9b0

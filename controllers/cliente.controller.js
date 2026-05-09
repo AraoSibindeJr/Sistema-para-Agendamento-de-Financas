@@ -40,9 +40,13 @@ class ClienteController {
 
         const id = saved._id;
 
+        const user = saved;
+        console.log(user)
+
         res.status(200).json({ 
             message: "Login effectuado com sucesso!",
-            data: id
+            data: id,
+            user: user
         })
     }
 
